@@ -49,10 +49,11 @@
     <!-- ! ADMINISTRACION -->
 
     <section id="admin" class="admin">
-      <!-- * gestion de temas -->
+      <!-- ? GESTION DE TEMAS -->
+
       <div>
         <h2 class="gestionTitle">GESTION DE TEMAS</h2>
-        <h4>Alta de temas</h4>
+        <h4><strong>Alta de temas</strong></h4>
       </div>
       <form action="submit" class="adminForm">
         <label for="nombre">Nombre:</label>
@@ -63,6 +64,7 @@
         <button>Guardar</button>
       </form>
       <div>
+        <h4><strong>Datos generales de temas</strong></h4>
         <p>Lista de temas (Total de temas: <span id="totalTemas">0</span>)</p>
         <ul>
           <li id="listaTemas">Sin datos</li>
@@ -75,6 +77,88 @@
         <ul>
           <li>Sin datos</li>
         </ul>
+      </div>
+
+      <!--?  GESTION DE PREGUNTAS -->
+
+      <div>
+        <h2 class="gestionTitle">GESTION DE PREGUNTAS</h2>
+        <h4><strong>Alta de preguntas</strong></h4>
+      </div>
+      <form action="submit" class="adminForm">
+        <div>
+          <label for="temas">Tema:</label>
+          <select name="tema" id="temas"></select>
+        </div>
+        <div>
+          <label for="nivel">Nivel</label>
+          <input type="text" id="nivel" />
+        </div>
+        <div>
+          <label for="textoPregunta">Texto de la pregunta:</label>
+          <input type="text" id="textoPregunta" />
+        </div>
+        <div>
+          <label for="correcta">Respuesta Correcta: </label>
+          <input type="text" id="correcta" />
+        </div>
+
+        <div>
+          <label for="incorrecta">Respuesta Inorrecta: </label>
+          <input type="text" id="incorrecta" />
+        </div>
+        <button>Guardar</button>
+      </form>
+      <>
+        <h4><strong>Datos generales de preguntas</strong></h4>
+        <p>
+          Total de preguntas registradas:
+          <span id="totalTemas">0 preguntas</span>
+        </p>
+
+        <p>Maximo puntaje obtenido por un jugador: sin datos</p>
+      
+          <div>
+            <p>Preguntas registradas:</p>
+            <label for="creciente">
+              <input
+                type="checkbox"
+                id="creciente"
+                title="Orden nombre tema creciente/nivel creciente"
+              />
+              Orden nombre tema creciente/nivel creciente
+            </label>
+
+            <label for="decreciente">
+              <input
+                type="checkbox"
+                id="decreciente"
+                title="Orden nombre tema decreciente/nivel creciente"
+              />
+              Orden nombre tema decreciente/nivel creciente
+            </label>
+          </div>
+
+          <table border="1px">
+            <th>
+              <tr>
+                Nombre del tema
+              </tr>
+              <tr>
+                Nivel
+              </tr>
+              <tr>
+                Texto de la pregunta
+              </tr>
+              <tr>
+                Respuesta Correcta
+              </tr>
+              <tr>
+                Respuesta Incorrecta
+              </tr>
+            </th>
+          </table>
+        
       </div>
     </section>
     <!-- <section style="height: 1200px"></section> -->
