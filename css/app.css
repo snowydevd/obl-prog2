@@ -77,3 +77,12 @@ li a {
   /* text-decoration: none; */
   transition: 0.4s;
 }
+.fotos{
+  background-color: aliceblue;
+  width: 100%;
+}
+
+.fotos div{
+  width: fit-content;
+  display: 	inline-block;
+}
