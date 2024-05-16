@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/app.css" />
     <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/game.css" />
     <title>Trivia</title>
   </head>
   <body>
@@ -42,8 +43,15 @@
       <p>
         El sitio fue desarrollado en el 1er. semestre 2024 - Programación I -
         Universidad ORT Uruguay por:
-        <strong>Lautaro Chini y Facundo Ortiz </strong>
       </p>
+      <div class="fotos">
+        <div>
+          <img src="" alt="Foto Lautaro"><strong>Lautaro Chini (328338)</strong>
+        </div>
+        <div>
+          <img src="" alt="Foto Facundo"><strong>Facundo Ortiz (331270)</strong>
+        </div>
+      </div>
     </section>
 
     <!-- ! ADMINISTRACION -->
@@ -124,7 +132,7 @@
               <input
                 type="checkbox"
                 id="creciente"
-                title="Orden nombre tema creciente/nivel creciente"
+                title="Orden nombre tema decreciente/nivel creciente"
               />
               Orden nombre tema creciente/nivel creciente
             </label>
@@ -133,7 +141,7 @@
               <input
                 type="checkbox"
                 id="decreciente"
-                title="Orden nombre tema decreciente/nivel creciente"
+                title="Orden nombre tema creciente/nivel creciente"
               />
               Orden nombre tema decreciente/nivel creciente
             </label>
@@ -163,6 +171,37 @@
     </section>
     <!-- <section style="height: 1200px"></section> -->
 
+    <!-- JUEGO -->
+
+    <section id="jugar" class="game">
+      <div>
+        <h2 class="gameTitle">¡A JUGAR!</h2>
+        <h4><strong>Configuración</strong></h4>
+      </div>
+      <form action="submit" class="gameForm">
+        <label for="temaJuego">Tema a elegir</label>
+        <select name="gameTema" id="temaJuego"></select>
+        <label for="nivel">Nivel del juego</label>
+        <input type="text" id="nivel">
+        <button>Jugar</button>
+      </form>
+      <div>
+        <h4><strong>Juego</strong></h4>
+        <p>Puntaje acumulado en esta partida: 0</p>
+        <p>La pregunta es...:</p>
+        <p>TEXTO DE LA PREGUNTA</p>
+      </div>
+      <form action="submit">
+        <div>
+          <button class="respuestas">Respuesta 1</button>
+          <button class="respuestas">Respuesta 2</button>
+          <button class="respuestas">Respuesta 3</button>
+        </div>
+        <div>
+          <button>Ayuda</button><button>Siguiente partida</button><button>Terminar</button>
+        </div>
+      </form>
+    </section>
     <script src="./js/app.js"></script>
   </body>
 </html>
