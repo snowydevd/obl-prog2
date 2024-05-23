@@ -9,12 +9,22 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+img {
+  width: 100px;
+  max-height: 100px;
+  border-radius: 5px;
+}
+
 .title {
   margin: 5px 5px;
   border-radius: 10px;
   color: orange;
   background-color: black;
   padding: 10px;
+}
+
+.nombre {
+  margin-bottom: 40px;
 }
 .admin div h4 {
   margin: 15px;
@@ -77,12 +87,13 @@ li a {
   /* text-decoration: none; */
   transition: 0.4s;
 }
-.fotos{
-  background-color: aliceblue;
+.fotos {
+  margin: 10px;
+  /* background-color: aliceblue */
   width: 100%;
 }
 
-.fotos div{
+.fotos div {
   width: fit-content;
-  display: 	inline-block;
+  display: inline-block;
 }

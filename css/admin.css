@@ -37,9 +37,25 @@
   width: fit-content;
 }
 
-.admin div table {
-  border-width: 1px;
+.tabla-muestra {
   width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-muestra th,
+.tabla-muestra td {
+  border: 1px solid #000;
+  padding: 8px 0px;
+  text-align: center;
+}
+
+.tabla-muestra thead {
+  background-color: rgb(217, 217, 217);
+}
+
+.tabla-muestra tbody {
+  margin-top: 100px;
+  background-color: #fff9c4;
 }
 /* 
 .adminForm button {
