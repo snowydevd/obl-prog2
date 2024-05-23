@@ -25,18 +25,29 @@
 }
 
 .adminForm {
-  width: 70%;
-  display: inline-block;
+  width: 80%;
+  columns: 3;
+  /* display: inline-block; */
 
   justify-items: left;
   align-items: left;
 }
 
 .adminForm div {
-  display: inline;
   width: fit-content;
+  /* background: white; */
+
+  /* width: fit-content; */
 }
 
+.adminForm button {
+  margin-top: 10px;
+  border-radius: 0;
+  padding: 2px;
+}
+.adminForm div select {
+  width: 100px;
+}
 .tabla-muestra {
   width: 100%;
   border-collapse: collapse;
@@ -73,3 +84,5 @@
 .adminForm div label {
   display: inline-block;
 } */
+
+/* ae */

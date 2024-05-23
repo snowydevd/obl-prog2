@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- 
+      TRABAJO REALIZADO POR:
+        - Lautaro Chini - 328338
+        - Facundo Ortiz - 331270
+     -->
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{Diviertete jugando trivia}}" />
+    <meta name="keywords" content="{{game, trivia, fun}}" />
     <link rel="stylesheet" href="./css/app.css" />
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="stylesheet" href="./css/game.css" />
@@ -46,10 +54,15 @@
       </p>
       <div class="fotos">
         <div>
-          <img src="./img/chini.jpg" alt="Foto Lautaro"><strong class="nombre">Lautaro Chini (328338)</strong>
+          <img src="./img/chini.jpg" alt="Foto Lautaro" /><strong class="nombre"
+            >Lautaro Chini (328338)</strong
+          >
         </div>
         <div>
-          <img src="./img/facurbo.jpg" alt="Foto Facundo"><strong class="nombre">Facundo Ortiz (331270)</strong>
+          <img src="./img/facurbo.jpg" alt="Foto Facundo" /><strong
+            class="nombre"
+            >Facundo Ortiz (331270)</strong
+          >
         </div>
       </div>
     </section>
@@ -73,7 +86,9 @@
       </form>
       <div>
         <h4><strong>Datos generales de temas</strong></h4>
-        <p>Lista de temas (Total de temas: <span id="totalTemas">0</span>)</p>
+        <p>
+          Lista de temas (Total de temas: <span id="totalTemasSpan">0</span>)
+        </p>
         <ul>
           <li id="listaTemas">Sin datos</li>
         </ul>
@@ -117,37 +132,37 @@
         </div>
         <button>Guardar</button>
       </form>
-    
-        <h4><strong>Datos generales de preguntas</strong></h4>
-        <p>
-          Total de preguntas registradas:
-          <span id="totalTemas">0 preguntas</span>
-        </p>
 
-        <p>Maximo puntaje obtenido por un jugador: sin datos</p>
-      
-          <div>
-            <p>Preguntas registradas:</p>
-            <label for="creciente">
-              <input
-                type="checkbox"
-                id="creciente"
-                title="Orden nombre tema decreciente/nivel creciente"
-              />
-              Orden nombre tema creciente/nivel creciente
-            </label>
+      <h4><strong>Datos generales de preguntas</strong></h4>
+      <p>
+        Total de preguntas registradas:
+        <span id="totalTemas">0 preguntas</span>
+      </p>
 
-            <label for="decreciente">
-              <input
-                type="checkbox"
-                id="decreciente"
-                title="Orden nombre tema creciente/nivel creciente"
-              />
-              Orden nombre tema decreciente/nivel creciente
-            </label>
-          </div>
+      <p>Maximo puntaje obtenido por un jugador: sin datos</p>
 
-          <!-- <table>
+      <div>
+        <p>Preguntas registradas:</p>
+        <label for="creciente">
+          <input
+            type="checkbox"
+            id="creciente"
+            title="Orden nombre tema decreciente/nivel creciente"
+          />
+          Orden nombre tema creciente/nivel creciente
+        </label>
+
+        <label for="decreciente">
+          <input
+            type="checkbox"
+            id="decreciente"
+            title="Orden nombre tema creciente/nivel creciente"
+          />
+          Orden nombre tema decreciente/nivel creciente
+        </label>
+      </div>
+
+      <!-- <table>
             <th>
               <tr>
                 Nombre del tema
@@ -167,21 +182,18 @@
             </th>
           </table>
          -->
-         <table class="tabla-muestra">
+      <table class="tabla-muestra">
         <thead>
-            <tr>
-                <th>Nombre del tema</th>
-                <th>Nivel</th>
-                <th>Texto de la pregunta</th>
-                <th>Respuesta correcta</th>
-                <th>Respuestas incorrectas</th>
-            </tr>
+          <tr>
+            <th>Nombre del tema</th>
+            <th>Nivel</th>
+            <th>Texto de la pregunta</th>
+            <th>Respuesta correcta</th>
+            <th>Respuestas incorrectas</th>
+          </tr>
         </thead>
-        <tbody>
-           
-        </tbody>
-    </table>
-      </div>
+        <tbody></tbody>
+      </table>
     </section>
     <!-- <section style="height: 1200px"></section> -->
 
@@ -195,8 +207,8 @@
       <form action="submit" class="gameForm">
         <label for="temaJuego">Tema a elegir</label>
         <select name="gameTema" id="temaJuego"></select>
-        <label for="nivel">Nivel del juego</label>
-        <input type="text" id="nivel">
+        <label for="nivelJuego">Nivel del juego</label>
+        <input type="text" id="nivelJuego" />
         <button>Jugar</button>
       </form>
       <div>
@@ -217,7 +229,7 @@
           <button>Terminar</button>
         </div>
       </form>
-    </section>    
+    </section>
     <script src="./js/app.js"></script>
   </body>
 </html>
