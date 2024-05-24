@@ -43,6 +43,9 @@ li a {
   transition: 0.4s;
 }
 
+.fotoEstudiante {
+  border-radius: 100%;
+}
 .title {
   margin: auto;
   border-radius: 10px;
