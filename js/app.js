@@ -1,8 +1,10 @@
 window.addEventListener("load", inicio);
 function inicio() {
-  document.getElementById("jugar").addEventListener("click", testAlert);
+  document.getElementById("guardarTema").addEventListener("click", agregarTema);
 }
 
-function testAlert() {
-  alert("Testeo de alerta");
-}
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+});
