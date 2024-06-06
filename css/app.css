@@ -30,12 +30,12 @@ header nav {
   /* background: #000; */
 }
 
-li {
+.navLi {
   list-style: none;
   display: inline;
   text-decoration: none;
 }
-li a {
+.navLi a {
   font-size: 20px;
   font-weight: 500;
   margin: 4px;
@@ -105,4 +105,7 @@ li a {
 .fotos div {
   width: fit-content;
   display: inline-block;
+}
+
+li {
 }

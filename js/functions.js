@@ -3,7 +3,7 @@ var cantTemas = 0;
 var temas = [];
 
 function agregarTema() {
-  let temaName = document.getElementById("nombreTema").value;
+  let temaName = document.getElementById("nombreTeama").value;
   let temaDescription = document.getElementById("descriptionTema").value;
   var tema = new Tema(temaName, temaDescription);
 

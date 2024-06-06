@@ -21,9 +21,9 @@
       <h1 class="title">Trivia!</h1>
       <nav class="navigation">
         <ul>
-          <li><a href="#info">Informacion general</a></li>
-          <li><a href="#admin">Administrar</a></li>
-          <li><a href="#jugar">Jugar!</a></li>
+          <li class="navLi"><a href="#info">Informacion general</a></li>
+          <li class="navLi"><a href="#admin">Administrar</a></li>
+          <li class="navLi"><a href="#jugar">Jugar!</a></li>
         </ul>
       </nav>
     </header>
@@ -79,21 +79,21 @@
         <h2 class="gestionTitle">GESTION DE TEMAS</h2>
         <h4><strong>Alta de temas</strong></h4>
       </div>
-      <form action="submit" class="adminForm">
+      <form class="adminForm">
         <label for="nombre">Nombre:</label>
-        <input id="nombre" type="text" />
+        <input id="nombreTema" type="text" required />
 
         <label for="descripcion">Descripcion:</label>
-        <input type="text" id="descripcion" />
-        <button>Guardar</button>
+        <input type="text" id="descriptionTema" required />
+        <input type="submit" id="guardarTema" value="Guardar Tema" />
       </form>
       <div>
         <h4><strong>Datos generales de temas</strong></h4>
         <p>
           Lista de temas (Total de temas: <span id="totalTemasSpan">0</span>)
         </p>
-        <ul>
-          <li id="listaTemas">Sin datos</li>
+        <ul id="listaTemas" class="listaTemas">
+          <!-- <li>Sin datos</li> -->
         </ul>
         <p>
           Promedio de preguntas por tema (cantidad total de preguntas/cantidad
@@ -236,5 +236,7 @@
       </form>
     </section>
     <script src="./js/app.js"></script>
+    <script src="./js/classes.js"></script>
+    <script src="./js/functions.js"></script>
   </body>
 </html>
