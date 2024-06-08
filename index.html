@@ -77,6 +77,7 @@
 
       <div>
         <h2 class="gestionTitle">GESTION DE TEMAS</h2>
+
         <h4><strong>Alta de temas</strong></h4>
       </div>
       <form class="adminForm">
@@ -111,29 +112,36 @@
         <h2 class="gestionTitle">GESTION DE PREGUNTAS</h2>
         <h4><strong>Alta de preguntas</strong></h4>
       </div>
-      <form action="submit" class="adminForm">
+      <form class="adminForm">
         <div>
           <label for="temas">Tema:</label>
-          <select name="tema" id="temas"></select>
+          <select name="tema" id="temas" required>
+            <option value="">Geografia</option>
+          </select>
         </div>
         <div>
           <label for="nivel">Nivel</label>
-          <input type="text" id="nivel" />
+          <input type="text" id="nivel" required />
         </div>
         <div>
           <label for="textoPregunta">Texto de la pregunta:</label>
-          <input type="text" id="textoPregunta" />
+          <input type="text" id="textoPregunta" required />
         </div>
         <div>
           <label for="correcta">Respuesta Correcta: </label>
-          <input type="text" id="correcta" />
+          <input type="text" id="correcta" required />
         </div>
 
         <div>
           <label for="incorrecta">Respuesta Inorrecta: </label>
-          <input type="text" id="incorrecta" />
+          <input type="text" id="incorrecta" required />
         </div>
-        <button>Guardar</button>
+        <input
+          type="submit"
+          id="guardarPregunta"
+          name="guardarPregunta"
+          value="Guardar Pregunta"
+        />
       </form>
 
       <h4><strong>Datos generales de preguntas</strong></h4>
@@ -148,46 +156,26 @@
         <p>Preguntas registradas:</p>
         <label for="creciente">
           <input
-            type="checkbox"
+            type="radio"
             name="elegirOrden"
-            id="creciente"
+            id="elegirOrden"
             title="Orden nombre tema decreciente/nivel creciente"
+            checked
           />
           Orden nombre tema creciente/nivel creciente
         </label>
 
         <label for="decreciente">
           <input
-            type="checkbox"
+            type="radio"
             name="elegirOrden"
-            id="decreciente"
+            id="elegirOrden"
             title="Orden nombre tema creciente/nivel creciente"
           />
           Orden nombre tema decreciente/nivel creciente
         </label>
       </div>
-
-      <!-- <table>
-            <th>
-              <tr>
-                Nombre del tema
-              </tr>
-              <tr>
-                Nivel
-              </tr>
-              <tr>
-                Texto de la pregunta
-              </tr>
-              <tr>
-                Respuesta Correcta
-              </tr>
-              <tr>
-                Respuesta Incorrecta
-              </tr>
-            </th>
-          </table>
-         -->
-      <table class="tabla-muestra">
+      <table class="tabla-muestra" id="tabla-muestra">
         <thead>
           <tr>
             <th>Nombre del tema</th>
@@ -235,8 +223,9 @@
         </div>
       </form>
     </section>
-    <script src="./js/app.js"></script>
-    <script src="./js/classes.js"></script>
-    <script src="./js/functions.js"></script>
+    <script src="./js/datosPrueba.js"></script>
+    <script src="./js/sistema.js"></script>
+    <script src="./js/clases.js"></script>
+    <script src="./js/funciones.js"></script>
   </body>
 </html>
