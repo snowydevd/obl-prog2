@@ -80,20 +80,20 @@
 
         <h4><strong>Alta de temas</strong></h4>
       </div>
-      <form class="adminForm">
+      <form class="adminForm" id="temaForm">
         <label for="nombre">Nombre:</label>
         <input id="nombreTema" type="text" required />
 
         <label for="descripcion">Descripcion:</label>
         <input type="text" id="descriptionTema" required />
-        <input type="submit" id="guardarTema" value="Guardar Tema" />
+        <button type="submit" id="guardarTema">Guardar Tema</button>
       </form>
       <div>
         <h4><strong>Datos generales de temas</strong></h4>
         <p>
           Lista de temas (Total de temas: <span id="totalTemasSpan">0</span>)
         </p>
-        <ul id="listaTemas" class="listaTemas">
+        <ul id="liTemas" class="liTemas">
           <!-- <li>Sin datos</li> -->
         </ul>
         <p>
@@ -112,11 +112,11 @@
         <h2 class="gestionTitle">GESTION DE PREGUNTAS</h2>
         <h4><strong>Alta de preguntas</strong></h4>
       </div>
-      <form class="adminForm">
+      <form class="adminForm" id="pregForm">
         <div>
           <label for="temas">Tema:</label>
           <select name="tema" id="temas" required>
-            <option value="">Geografia</option>
+            <!-- <option value="">Geografia</option> -->
           </select>
         </div>
         <div>
@@ -136,12 +136,7 @@
           <label for="incorrecta">Respuesta Inorrecta: </label>
           <input type="text" id="incorrecta" required />
         </div>
-        <input
-          type="submit"
-          id="guardarPregunta"
-          name="guardarPregunta"
-          value="Guardar Pregunta"
-        />
+        <button type="submit" id="guardarPregunta">Guardar pregunta</button>
       </form>
 
       <h4><strong>Datos generales de preguntas</strong></h4>
@@ -224,7 +219,7 @@
       </form>
     </section>
     <script src="./js/datosPrueba.js"></script>
-    <script src="./js/sistema.js"></script>
+    <!-- <script src="./js/sistema.js"></script> -->
     <script src="./js/clases.js"></script>
     <script src="./js/funciones.js"></script>
   </body>
