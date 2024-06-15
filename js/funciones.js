@@ -13,11 +13,11 @@ function inicio() {
 }
 
 // funcion para evitar que se recargue la pagina al dar submit
-// const form = document.querySelector("form");
+const form = document.querySelector("form");
 
-// form.addEventListener("submit", function (e) {
-//   e.preventDefault();
-// });
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+});
 
 // Variables adicionales
 var cantTemas = 0;
@@ -27,7 +27,7 @@ var temas = [];
 let miSistema = new Sistema();
 
 function nuevoTema() {
-  e.preventDefault();
+  // e.preventDefault();
   let form = document.getElementById("temaForm").valid;
 
   let temaName = document.getElementById("nombreTema").value;
@@ -78,7 +78,7 @@ function nuevoTema() {
 }
 
 function nuevaPregunta() {
-  e.preventDefault();
+  // e.preventDefault();
 
   let form = document.getElementById("pregForm");
 
@@ -95,6 +95,8 @@ function nuevaPregunta() {
     if (miSistema.existePregunta(texto, temaOpt)) {
       let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
       miSistema.agregarPregunta(preg);
+      cantPreguntas++;
+      console.log(cantPreguntas);
       console.log(preg);
 
       let celdas = [texto, nivel, temaOpt, correcta, incorrecta];

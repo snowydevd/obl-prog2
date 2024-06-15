@@ -11,6 +11,7 @@ class Sistema {
   agregarPregunta(pregunta) {
     this.listaPreguntas.push(pregunta);
   }
+  
   existeTema(nombreTema) {
     let valido = true;
     for (let tema of this.listaTemas) {
