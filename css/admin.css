@@ -32,6 +32,13 @@
   justify-items: left;
   align-items: left;
 }
+.temaForm {
+  columns: 3;
+  /* display: inline-block; */
+
+  justify-items: left;
+  align-items: left;
+}
 
 .adminForm div {
   width: fit-content;

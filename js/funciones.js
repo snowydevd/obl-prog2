@@ -20,10 +20,12 @@ function inicio() {
 }
 
 // funcion para evitar que se recargue la pagina al dar submit
-const form = document.querySelector("form");
+var form = document.querySelectorAll("form");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+form.forEach((form) => {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+  });
 });
 
 // Variables adicionales
@@ -108,21 +110,18 @@ function nuevaPregunta() {
 
   // console.log(preg);
   if (miSistema.existePregunta(texto, temaOpt)) {
-    let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
-    miSistema.agregarPregunta(preg);
-    cantPreguntas++;
-    console.log(cantPreguntas);
-    console.log(preg);
-
-    let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
-    alert("pregunta agregada");
+    // let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
+    // miSistema.agregarPregunta(preg);
+    // cantPreguntas++;
+    // console.log(cantPreguntas);
+    // console.log(preg);
+    // let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
     // for (let i = 0; i <= celdas.length; i++) {
     //   let tr = document.createElement("tr");
     //   let td = document.createElement("td");
     //   let cellTextNode = document.createTextNode(celdas[i]);
     //   td.appendChild(cellTextNode);
     //   tr.appendChild(td);
-
     //   tablaMuestra.appendChild(tr);
     // }
   } else {
@@ -131,7 +130,7 @@ function nuevaPregunta() {
   // } else {
   //   alert("Formulario debe ser valido");
   // }
-
+  alert("pregunta agregada");
   // agregar datos a la tabla
 }
 
@@ -176,7 +175,7 @@ function cargarDatos(preguntas) {
   section.style.display = "none";
 }
 
-if (confirmLoad) {
-  cargarDatos(preguntas);
-  alert("datos cargados");
-}
+// if (confirmLoad) {
+//   cargarDatos(preguntas);
+//   alert("datos cargados");
+// }
