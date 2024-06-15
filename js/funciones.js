@@ -82,40 +82,40 @@ function nuevaPregunta() {
 
   let form = document.getElementById("pregForm");
 
-  if (form.reportValidity()) {
-    let texto = document.getElementById("textoPregunta").value;
-    let nivel = document.getElementById("nivel").value;
-    let temaOpt = document.getElementById("temas").value;
-    let correcta = document.getElementById("correcta").value;
-    let incorrecta = document.getElementById("incorrecta").value;
+  // if (form.reportValidity()) {
+  let texto = document.getElementById("textoPregunta").value;
+  let nivel = document.getElementById("nivel").value;
+  let temaOpt = document.getElementById("temas").value;
+  let correcta = document.getElementById("correcta").value;
+  let incorrecta = document.getElementById("incorrecta").value;
 
-    incorrecta = incorrecta.split(", ");
+  incorrecta = incorrecta.split(", ");
 
-    // console.log(preg);
-    if (miSistema.existePregunta(texto, temaOpt)) {
-      let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
-      miSistema.agregarPregunta(preg);
-      cantPreguntas++;
-      console.log(cantPreguntas);
-      console.log(preg);
+  // console.log(preg);
+  if (miSistema.existePregunta(texto, temaOpt)) {
+    let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
+    miSistema.agregarPregunta(preg);
+    cantPreguntas++;
+    console.log(cantPreguntas);
+    console.log(preg);
 
-      let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
-      alert("pregunta agregada");
-      // for (let i = 0; i <= celdas.length; i++) {
-      //   let tr = document.createElement("tr");
-      //   let td = document.createElement("td");
-      //   let cellTextNode = document.createTextNode(celdas[i]);
-      //   td.appendChild(cellTextNode);
-      //   tr.appendChild(td);
+    let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
+    alert("pregunta agregada");
+    // for (let i = 0; i <= celdas.length; i++) {
+    //   let tr = document.createElement("tr");
+    //   let td = document.createElement("td");
+    //   let cellTextNode = document.createTextNode(celdas[i]);
+    //   td.appendChild(cellTextNode);
+    //   tr.appendChild(td);
 
-      //   tablaMuestra.appendChild(tr);
-      // }
-    } else {
-      alert("La pregunta ya existe o no es valida");
-    }
+    //   tablaMuestra.appendChild(tr);
+    // }
   } else {
-    alert("Formulario debe ser valido");
+    alert("La pregunta ya existe o no es valida");
   }
+  // } else {
+  //   alert("Formulario debe ser valido");
+  // }
 
   // agregar datos a la tabla
 }
