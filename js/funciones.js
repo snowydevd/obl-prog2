@@ -2,13 +2,20 @@
 
 window.addEventListener("load", inicio);
 
-const confirmLoad = confirm("desea cargar datos?");
+// const confirmLoad = confirm("desea cargar datos?");
 
 function inicio() {
   document.getElementById("guardarTema").addEventListener("click", nuevoTema);
   document
     .getElementById("guardarPregunta")
     .addEventListener("click", nuevaPregunta);
+
+  document
+    .getElementById("cargarDatosBtn")
+    .addEventListener("click", cargarDatos);
+  document
+    .getElementById("cancelCargaDatos")
+    .addEventListener("click", hideCarga);
   // alert('desea cargar los datos?')
 }
 
@@ -25,6 +32,14 @@ var cantPreguntas = 0;
 var prom = cantTemas + cantPreguntas / 2;
 var temas = [];
 let miSistema = new Sistema();
+
+// funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
+function hideCarga() {
+  // alert("ae");
+  let section = document.getElementById("cargaDatosSection");
+
+  section.style.display = "none";
+}
 
 function nuevoTema() {
   // e.preventDefault();
@@ -156,6 +171,9 @@ function cargarDatos(preguntas) {
       nuevaPregunta(preg);
     }
   }
+  let section = document.getElementById("cargaDatosSection");
+
+  section.style.display = "none";
 }
 
 if (confirmLoad) {
