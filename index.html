@@ -129,7 +129,7 @@
         </div>
         <div>
           <label for="nivel">Nivel</label>
-          <input type="number" id="nivel" required />
+          <input type="number" id="nivel" min="0" max="5" required />
         </div>
         <div>
           <label for="textoPregunta">Texto de la pregunta:</label>
@@ -150,7 +150,7 @@
       <h4><strong>Datos generales de preguntas</strong></h4>
       <p>
         Total de preguntas registradas:
-        <span id="totalTemas">0 preguntas</span>
+        <span id="totalPreguntas">0 preguntas</span>
       </p>
 
       <p>Maximo puntaje obtenido por un jugador: sin datos</p>
@@ -181,9 +181,10 @@
       <table class="tabla-muestra" id="tabla-muestra">
         <thead>
           <tr>
-            <th>Nombre del tema</th>
-            <th>Nivel</th>
             <th>Texto de la pregunta</th>
+            <th>Nivel</th>
+            <th>Nombre del tema</th>
+
             <th>Respuesta correcta</th>
             <th>Respuestas incorrectas</th>
           </tr>

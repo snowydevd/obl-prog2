@@ -11,15 +11,23 @@ class Sistema {
   agregarPregunta(pregunta) {
     this.listaPreguntas.push(pregunta);
   }
-  
+
+  // REVISAR ESTO EN AYUDANTIAS
   existeTema(nombreTema) {
+    // let valido = true;
+    // for (let tema of this.listaTemas) {
+    //   if (nombreTema == tema) {
+    //     valido = false;
+    //   }
+    // }
+    // return valido;
+
     let valido = true;
-    for (let tema of this.listaTemas) {
-      if (nombreTema == tema) {
+    temas.forEach((tema) => {
+      if ((tema = nombreTema)) {
         valido = false;
       }
-    }
-    return valido;
+    });
   }
   existePregunta(texto, tema) {
     let valido = true;

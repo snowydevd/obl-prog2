@@ -31,7 +31,7 @@ form.forEach((form) => {
 // Variables adicionales
 var cantTemas = 0;
 var cantPreguntas = 0;
-var prom = cantTemas + cantPreguntas / 2;
+var prom = cantTemas / cantPreguntas;
 var temas = [];
 let miSistema = new Sistema();
 
@@ -45,52 +45,50 @@ function hideCarga() {
 
 function nuevoTema() {
   // e.preventDefault();
-  let form = document.getElementById("temaForm").valid;
+  let temaForm = document.getElementById("temaForm");
 
-  let temaName = document.getElementById("nombreTema").value;
-  let temaDescription = document.getElementById("descriptionTema").value;
-  if (miSistema.existeTema(temaName)) {
-    var tema = new Tema(temaName, temaDescription);
-    console.log(tema.nombre);
-    miSistema.agregarTema(tema);
-    // * AGREGAR EL TEMA AL ARRAY DE TEMAS Y AGREGAR +1 A 'cantTemas'
-    //temas.push(tema.nombre);
+  if (temaForm.reportValidity()) {
+    let temaName = document.getElementById("nombreTema").value;
+    let temaDescription = document.getElementById("descriptionTema").value;
 
-    cantTemas += 1;
-    // for (let i = 0; i <= temas.length; i++) {
-    //   let tema = temas[i];
-    //   if (tema === temaName) {
-    //     alert(`EL tema ${temaName} ya se encuentra en la lista de temas!`);
-    //   } else {
-    //     temas.push(tema);
-    //   }
-    // }
-    // * AGREGAR EL TEMA A LA LISTA `listaTemas`
-    let liTemas = document.getElementById("liTemas");
-    // liTemas.innerHTML = "";
-    let LIObj = document.createElement("LI");
-    let textNodeLI = document.createTextNode(
-      `${tema.nombre}: ${tema.descripcion}`
-    );
+    if (miSistema.existeTema(temaName)) {
+      var tema = new Tema(temaName, temaDescription);
+      miSistema.agregarTema(tema);
+      // * AGREGAR EL TEMA AL ARRAY DE TEMAS Y AGREGAR +1 A 'cantTemas'
+      //temas.push(tema.nombre);
 
-    LIObj.appendChild(textNodeLI);
-    liTemas.appendChild(LIObj);
+      cantTemas += 1;
+      // * AGREGAR EL TEMA A LA LISTA `listaTemas`
+      let liTemas = document.getElementById("liTemas");
+      // liTemas.innerHTML = "";
+      let LIObj = document.createElement("LI");
+      let textNodeLI = document.createTextNode(
+        `${tema.nombre}: ${tema.descripcion}`
+      );
 
-    // * AGREGAR CANTIDAD DE TEMAS (numero)
-    let totalTemas = document.getElementById("totalTemasSpan");
-    totalTemas.innerHTML = "";
-    let textNodeTotal = document.createTextNode(cantTemas);
-    totalTemas.appendChild(textNodeTotal);
+      LIObj.appendChild(textNodeLI);
+      liTemas.appendChild(LIObj);
 
-    // * AGREGAR TEMA AL SELECT DE ALTA DE PREGUNTAS
-    let temasSelect = document.getElementById("temas");
-    let nodeTextOption = document.createTextNode(temaName);
-    var temaOption = document.createElement("option");
-    // temaOption.id = tema.nombre;
-    temaOption.appendChild(nodeTextOption);
-    temasSelect.appendChild(temaOption);
+      // * AGREGAR CANTIDAD DE TEMAS (numero)
+      let totalTemas = document.getElementById("totalTemasSpan");
+      totalTemas.innerHTML = "";
+      let textNodeTotal = document.createTextNode(cantTemas);
+      totalTemas.appendChild(textNodeTotal);
 
-    alert(`El tema ${temaName} ha sido agregado`);
+      // * AGREGAR TEMA AL SELECT DE ALTA DE PREGUNTAS
+      let temasSelect = document.getElementById("temas");
+      let nodeTextOption = document.createTextNode(temaName);
+      var temaOption = document.createElement("option");
+      // temaOption.id = tema.nombre;
+      temaOption.appendChild(nodeTextOption);
+      temasSelect.appendChild(temaOption);
+
+      alert(`El tema ${temaName} ha sido agregado`);
+    } else {
+      alert("este tema ya existe");
+    }
+  } else {
+    alert("Porfavor, rellene todos los campos");
   }
 }
 
@@ -99,51 +97,55 @@ function nuevaPregunta() {
 
   let form = document.getElementById("pregForm");
 
-  // if (form.reportValidity()) {
-  let texto = document.getElementById("textoPregunta").value;
-  let nivel = document.getElementById("nivel").value;
-  let temaOpt = document.getElementById("temas").value;
-  let correcta = document.getElementById("correcta").value;
-  let incorrecta = document.getElementById("incorrecta").value;
+  if (form.reportValidity()) {
+    let texto = document.getElementById("textoPregunta").value;
+    let nivel = document.getElementById("nivel").value;
+    let temaOpt = document.getElementById("temas").value;
+    let correcta = document.getElementById("correcta").value;
+    let incorrecta = document.getElementById("incorrecta").value;
 
-  incorrecta = incorrecta.split(", ");
+    incorrecta = incorrecta.split(", ");
 
-  // console.log(preg);
-  if (miSistema.existePregunta(texto, temaOpt)) {
-    // let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
-    // miSistema.agregarPregunta(preg);
-    // cantPreguntas++;
-    // console.log(cantPreguntas);
     // console.log(preg);
-    // let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
-    // for (let i = 0; i <= celdas.length; i++) {
-    //   let tr = document.createElement("tr");
-    //   let td = document.createElement("td");
-    //   let cellTextNode = document.createTextNode(celdas[i]);
-    //   td.appendChild(cellTextNode);
-    //   tr.appendChild(td);
-    //   tablaMuestra.appendChild(tr);
-    // }
+    // if (miSistema.existePregunta(texto, temaOpt)) {
+    let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
+    miSistema.agregarPregunta(preg);
+
+    cantPreguntas++;
+    let contadorPreguntas = document.getElementById("totalPreguntas");
+    contadorPreguntas.innerHTML = cantPreguntas;
+
+    let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
+    agregarFilas(celdas);
+
+    alert("pregunta agregada");
+    // agregar datos a la tabla
   } else {
-    alert("La pregunta ya existe o no es valida");
+    alert("Porfavor, rellene todos los campos");
   }
-  // } else {
-  //   alert("Formulario debe ser valido");
-  // }
-  alert("pregunta agregada");
-  // agregar datos a la tabla
 }
 
-function agregarFilas(fila) {
+function agregarFilas(datos) {
   let tablaMuestra = document.getElementById("tabla-muestra");
-  for (let i = 0; i <= fila.length; i++) {
-    let tr = document.createElement("tr");
-    let td = document.createElement("td");
-    let cellTextNode = document.createTextNode(fila[i]);
-    td.appendChild(cellTextNode);
+  const tr = document.createElement("tr");
+
+  datos.forEach((dato) => {
+    const td = document.createElement("td");
+    const txtNode = document.createTextNode(dato);
+    td.appendChild(txtNode);
     tr.appendChild(td);
-    tablaMuestra.appendChild(tr);
-  }
+  });
+
+  tablaMuestra.append(tr);
+
+  // for (let i = 0; i <= fila.length; i++) {
+  //   let tr = document.createElement("tr");
+  //   let td = document.createElement("td");
+  //   let cellTextNode = document.createTextNode(fila[i]);
+  //   td.appendChild(cellTextNode);
+  //   tr.appendChild(td);
+  //   tablaMuestra.appendChild(tr);
+  // }
 }
 
 function cargarDatos(preguntas) {
