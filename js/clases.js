@@ -14,10 +14,18 @@ class Sistema {
 
   // REVISAR ESTO EN AYUDANTIAS
   existeTema(nombreTema) {
-    25;
+    let valido = this.listaTemas.some((tema) => tema.nombre === nombreTema);
+    // console.log(valido);
+
     return valido;
   }
   existePregunta(texto, tema) {
+    // document.getElementById("cargaDatosSection").style.display = "block";
+    let valido = this.listaPreguntas.some(
+      (pregunta) => pregunta.texto === texto && pregunta.tema === tema
+    );
+    // console.log(valido);
+
     return valido;
   }
 }

@@ -1,8 +1,20 @@
 // alert("ha");
 
 window.addEventListener("load", inicio);
+// Variables adicionales
+var cantTemas = 0;
+var cantPreguntas = 0;
+var prom = cantTemas / cantPreguntas;
+var temas = [];
+let miSistema = new Sistema();
 
-// const confirmLoad = confirm("desea cargar datos?");
+var form = document.querySelectorAll("form");
+
+form.forEach((form) => {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+  });
+});
 
 function inicio() {
   document.getElementById("guardarTema").addEventListener("click", nuevoTema);
@@ -12,39 +24,69 @@ function inicio() {
 
   document
     .getElementById("cargarDatosBtn")
-    .addEventListener("click", cargarDatos);
+    .addEventListener("click", cargarDatos(preguntas));
   document
     .getElementById("cancelCargaDatos")
     .addEventListener("click", hideCarga);
 
-  document.getElementById("info").addEventListener("click", mostrarinfo);
-  document.getElementById("info").addEventListener("click", mostrarinfo);
-  document.getElementById("info").addEventListener("click", mostrarinfo);
+  document.getElementById("infoLink").addEventListener("click", mostrarInfo);
+  document
+    .getElementById("gestionLink")
+    .addEventListener("click", mostrarGestion);
+  document.getElementById("jugarLink").addEventListener("click", mostrarJugar);
 
   // alert('desea cargar los datos?')
 }
 
-// funcion para evitar que se recargue la pagina al dar submit
-var form = document.querySelectorAll("form");
+function mostrarInfo() {
+  document.getElementById("info").style.display = "block";
+  document.getElementById("admin").style.display = "none";
+  document.getElementById("jugar").style.display = "none";
+  document.getElementById("cargaDatosSection").style.display = "none";
+}
 
-form.forEach((form) => {
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-  });
-});
+function mostrarGestion() {
+  document.getElementById("info").style.display = "none";
+  document.getElementById("admin").style.display = "block";
+  document.getElementById("jugar").style.display = "none";
+  document.getElementById("cargaDatosSection").style.display = "block";
+}
 
-// Variables adicionales
-var cantTemas = 0;
-var cantPreguntas = 0;
-var prom = cantTemas / cantPreguntas;
-var temas = [];
-let miSistema = new Sistema();
+function mostrarJugar() {
+  document.getElementById("info").style.display = "none";
+  document.getElementById("admin").style.display = "none";
+  document.getElementById("jugar").style.display = "block";
+  document.getElementById("cargaDatosSection").style.display = "none";
+}
 
-// funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
-function hideCarga() {
-  // alert("ae");
+function cargarDatos(preguntas) {
+  for (let dato of preguntas) {
+    if (miSistema.existePregunta(dato.texto, dato.tema)) {
+      let preg = new Pregunta(
+        dato.texto,
+        dato.nivel,
+        dato.temasOpt,
+        dato.respuestaCorrecta,
+        dato.respuestasIncorrectas
+      );
+      let celdas = [
+        dato.texto,
+        dato.nivel,
+        dato.temasOpt,
+        dato.respuestaCorrecta,
+        dato.respuestasIncorrectas,
+      ];
+      console.log(preg);
+      agregarFilas(celdas);
+    }
+  }
   let section = document.getElementById("cargaDatosSection");
 
+  section.style.display = "none";
+}
+// funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
+function hideCarga() {
+  let section = document.getElementById("cargaDatosSection");
   section.style.display = "none";
 }
 
@@ -99,10 +141,7 @@ function nuevoTema() {
 }
 
 function nuevaPregunta() {
-  // e.preventDefault();
-
   let form = document.getElementById("pregForm");
-
   if (form.reportValidity()) {
     let texto = document.getElementById("textoPregunta").value;
     let nivel = document.getElementById("nivel").value;
@@ -143,47 +182,4 @@ function agregarFilas(datos) {
   });
 
   tablaMuestra.append(tr);
-
-  // for (let i = 0; i <= fila.length; i++) {
-  //   let tr = document.createElement("tr");
-  //   let td = document.createElement("td");
-  //   let cellTextNode = document.createTextNode(fila[i]);
-  //   td.appendChild(cellTextNode);
-  //   tr.appendChild(td);
-  //   tablaMuestra.appendChild(tr);
-  // }
 }
-
-function cargarDatos(preguntas) {
-  for (let dato of preguntas) {
-    if (miSistema.existePregunta(dato.texto, dato.tema)) {
-      let preg = new Pregunta(
-        dato.texto,
-        dato.nivel,
-        dato.temasOpt,
-        dato.respuestaCorrecta,
-        dato.respuestasIncorrectas
-      );
-      let celdas = [
-        dato.texto,
-        dato.nivel,
-        dato.temasOpt,
-        dato.respuestaCorrecta,
-        dato.respuestasIncorrectas,
-      ];
-      agregarFilas(celdas);
-      console.log(dato.texto);
-      miSistema.agregarPregunta(preg);
-
-      nuevaPregunta(preg);
-    }
-  }
-  let section = document.getElementById("cargaDatosSection");
-
-  section.style.display = "none";
-}
-
-// if (confirmLoad) {
-//   cargarDatos(preguntas);
-//   alert("datos cargados");
-// }

@@ -23,6 +23,22 @@ header {
   background-color: rgb(230, 139, 4);
 }
 
+#admin {
+  display: none;
+}
+
+#info {
+  display: block;
+}
+
+#jugar {
+  display: none;
+}
+
+#cargaDatosSection {
+  display: none;
+}
+
 header nav {
   margin-top: 10px;
   width: fit-content;
