@@ -16,6 +16,11 @@ function inicio() {
   document
     .getElementById("cancelCargaDatos")
     .addEventListener("click", hideCarga);
+
+  document.getElementById("info").addEventListener("click", mostrarinfo);
+  document.getElementById("info").addEventListener("click", mostrarinfo);
+  document.getElementById("info").addEventListener("click", mostrarinfo);
+
   // alert('desea cargar los datos?')
 }
 
@@ -51,9 +56,10 @@ function nuevoTema() {
     let temaName = document.getElementById("nombreTema").value;
     let temaDescription = document.getElementById("descriptionTema").value;
 
-    if (miSistema.existeTema(temaName)) {
+    if (!miSistema.existeTema(temaName)) {
       var tema = new Tema(temaName, temaDescription);
       miSistema.agregarTema(tema);
+
       // * AGREGAR EL TEMA AL ARRAY DE TEMAS Y AGREGAR +1 A 'cantTemas'
       //temas.push(tema.nombre);
 

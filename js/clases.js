@@ -14,28 +14,10 @@ class Sistema {
 
   // REVISAR ESTO EN AYUDANTIAS
   existeTema(nombreTema) {
-    // let valido = true;
-    // for (let tema of this.listaTemas) {
-    //   if (nombreTema == tema) {
-    //     valido = false;
-    //   }
-    // }
-    // return valido;
-
-    let valido = true;
-    temas.forEach((tema) => {
-      if ((tema = nombreTema)) {
-        valido = false;
-      }
-    });
+    25;
+    return valido;
   }
   existePregunta(texto, tema) {
-    let valido = true;
-    for (let preg of this.listaPreguntas) {
-      if (preg.tema == tema && preg.texto == texto) {
-        valido = false;
-      }
-    }
     return valido;
   }
 }
