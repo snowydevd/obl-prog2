@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{Diviertete jugando trivia}}" />
+    <meta name="keywords" content="{{game, trivia, fun}}" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/game.css" />
+
+    <title>Gestion - Trivia</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="title">Trivia!</h1>
+      <nav class="navigation">
+        <ul>
+          <li class="navLi"><a href="./index.html">Informacion general</a></li>
+          <li class="navLi"><a href="./gestion.html">Administrar</a></li>
+          <li class="navLi"><a href="./juego.html">Jugar!</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="cargarDatos" id="cargaDatosSection">
+      <h3>Desea cargar los datos de prueba?</h3>
+      <div>
+        <button id="cargarDatosBtn">Si</button>
+        <button id="cancelCargaDatos">no</button>
+      </div>
+    </section>
+
+    <section id="admin" class="admin">
+      <!-- ? GESTION DE TEMAS -->
+
+      <div>
+        <h2 class="gestionTitle">GESTION DE TEMAS</h2>
+
+        <h4><strong>Alta de temas</strong></h4>
+      </div>
+      <form class="temaForm" id="temaForm">
+        <label for="nombre">Nombre:</label>
+        <input id="nombreTema" type="text" required />
+
+        <label for="descripcion">Descripcion:</label>
+        <input type="text" id="descriptionTema" required />
+        <button type="submit" id="guardarTema">Guardar Tema</button>
+      </form>
+      <div>
+        <h4><strong>Datos generales de temas</strong></h4>
+        <p>
+          Lista de temas (Total de temas: <span id="totalTemasSpan">0</span>)
+        </p>
+        <ul id="liTemas" class="liTemas">
+          <!-- <li>Sin datos</li> -->
+        </ul>
+        <p>
+          Promedio de preguntas por tema (cantidad total de preguntas/cantidad
+          total de temas): <span id="promedio">sin datos</span>
+        </p>
+        <p>Temas sin datos</p>
+        <ul>
+          <li>Sin datos</li>
+        </ul>
+      </div>
+
+      <!--?  GESTION DE PREGUNTAS -->
+
+      <div>
+        <h2 class="gestionTitle">GESTION DE PREGUNTAS</h2>
+        <h4><strong>Alta de preguntas</strong></h4>
+      </div>
+      <form class="adminForm" id="pregForm">
+        <div>
+          <label for="temas">Tema:</label>
+          <select name="tema" id="temas" required>
+            <!-- <option value="">Geografia</option> -->
+          </select>
+        </div>
+        <div>
+          <label for="nivel">Nivel</label>
+          <input type="number" id="nivel" min="0" max="5" required />
+        </div>
+        <div>
+          <label for="textoPregunta">Texto de la pregunta:</label>
+          <input type="text" id="textoPregunta" required />
+        </div>
+        <div>
+          <label for="correcta">Respuesta Correcta: </label>
+          <input type="text" id="correcta" required />
+        </div>
+
+        <div>
+          <label for="incorrecta">Respuesta Inorrecta: </label>
+          <input type="text" id="incorrecta" required />
+        </div>
+        <button type="submit" id="guardarPregunta">Guardar Pregunta</button>
+      </form>
+
+      <h4><strong>Datos generales de preguntas</strong></h4>
+      <p>
+        Total de preguntas registradas:
+        <span id="totalPreguntas">0 preguntas</span>
+      </p>
+
+      <p>Maximo puntaje obtenido por un jugador: sin datos</p>
+
+      <div>
+        <p>Preguntas registradas:</p>
+        <label for="creciente">
+          <input
+            type="radio"
+            name="elegirOrden"
+            id="elegirOrden"
+            title="Orden nombre tema decreciente/nivel creciente"
+            checked
+          />
+          Orden nombre tema creciente/nivel creciente
+        </label>
+
+        <label for="decreciente">
+          <input
+            type="radio"
+            name="elegirOrden"
+            id="elegirOrden"
+            title="Orden nombre tema creciente/nivel creciente"
+          />
+          Orden nombre tema decreciente/nivel creciente
+        </label>
+      </div>
+      <table class="tabla-muestra" id="tabla-muestra">
+        <thead>
+          <tr>
+            <th>Texto de la pregunta</th>
+            <th>Nivel</th>
+            <th>Nombre del tema</th>
+
+            <th>Respuesta correcta</th>
+            <th>Respuestas incorrectas</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <script src="./js/datosPrueba.js"></script>
+    <script src="./js/clases.js"></script>
+    <script src="./js/funciones.js"></script>
+  </body>
+</html>
