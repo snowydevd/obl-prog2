@@ -15,7 +15,6 @@ class Sistema {
   // REVISAR ESTO EN AYUDANTIAS
   existeTema(nombreTema) {
     let valido = this.listaTemas.some((tema) => tema.nombre === nombreTema);
-    // console.log(valido);
 
     return valido;
   }

@@ -24,7 +24,7 @@ function inicio() {
 
   document
     .getElementById("cargarDatosBtn")
-    .addEventListener("click", cargarDatos(preguntas));
+    .addEventListener("click", cargarDatos);
   document
     .getElementById("cancelCargaDatos")
     .addEventListener("click", hideCarga);
@@ -59,25 +59,43 @@ function mostrarJugar() {
   document.getElementById("cargaDatosSection").style.display = "none";
 }
 
-function cargarDatos(preguntas) {
+function cargarDatos() {
+  console.log("funcion cargaDatos");
   for (let dato of preguntas) {
-    if (miSistema.existePregunta(dato.texto, dato.tema)) {
+    if (!miSistema.existePregunta(dato.texto, dato.tema.nombre)) {
+      if (!miSistema.existeTema(dato.tema.nombre)) {
+        var tema = new Tema(dato.tema.nombre, dato.tema.descripcion);
+        miSistema.agregarTema(tema);
+        console.log(`tema ${tema.nombre} agregado`);
+      } else {
+        console.log("tema ya existe");
+      }
+
+      cantTemas++;
+      cantPreguntas++;
+
       let preg = new Pregunta(
         dato.texto,
         dato.nivel,
-        dato.temasOpt,
+        tema,
         dato.respuestaCorrecta,
         dato.respuestasIncorrectas
       );
+
+      miSistema.agregarPregunta(preg);
       let celdas = [
         dato.texto,
         dato.nivel,
-        dato.temasOpt,
+        tema.nombre,
         dato.respuestaCorrecta,
         dato.respuestasIncorrectas,
       ];
-      console.log(preg);
+      addOption("temas", tema.nombre);
+      addOption("temaJuego", tema.nombre);
+
       agregarFilas(celdas);
+    } else {
+      alert("Ya existe la pregunta");
     }
   }
   let section = document.getElementById("cargaDatosSection");
@@ -85,9 +103,14 @@ function cargarDatos(preguntas) {
   section.style.display = "none";
 }
 // funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
-function hideCarga() {
-  let section = document.getElementById("cargaDatosSection");
-  section.style.display = "none";
+function hideCarga() {}
+
+function addOption(id, label) {
+  var select = document.getElementById(id);
+  var OptionTxt = document.createTextNode(label);
+  var option = document.createElement("option");
+  option.appendChild(OptionTxt);
+  select.appendChild(option);
 }
 
 function nuevoTema() {
@@ -103,7 +126,6 @@ function nuevoTema() {
       miSistema.agregarTema(tema);
 
       // * AGREGAR EL TEMA AL ARRAY DE TEMAS Y AGREGAR +1 A 'cantTemas'
-      //temas.push(tema.nombre);
 
       cantTemas += 1;
       // * AGREGAR EL TEMA A LA LISTA `listaTemas`
@@ -124,12 +146,9 @@ function nuevoTema() {
       totalTemas.appendChild(textNodeTotal);
 
       // * AGREGAR TEMA AL SELECT DE ALTA DE PREGUNTAS
-      let temasSelect = document.getElementById("temas");
-      let nodeTextOption = document.createTextNode(temaName);
-      var temaOption = document.createElement("option");
-      // temaOption.id = tema.nombre;
-      temaOption.appendChild(nodeTextOption);
-      temasSelect.appendChild(temaOption);
+
+      addOption("temas", temaName);
+      addOption("");
 
       alert(`El tema ${temaName} ha sido agregado`);
     } else {
@@ -151,8 +170,6 @@ function nuevaPregunta() {
 
     incorrecta = incorrecta.split(", ");
 
-    // console.log(preg);
-    // if (miSistema.existePregunta(texto, temaOpt)) {
     let preg = new Pregunta(texto, nivel, temaOpt, correcta, incorrecta);
     miSistema.agregarPregunta(preg);
 
@@ -164,7 +181,6 @@ function nuevaPregunta() {
     agregarFilas(celdas);
 
     alert("pregunta agregada");
-    // agregar datos a la tabla
   } else {
     alert("Porfavor, rellene todos los campos");
   }
