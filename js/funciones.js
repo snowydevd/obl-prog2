@@ -4,6 +4,8 @@ var cantTemas = 0;
 var cantPreguntas = 0;
 var prom = cantTemas / cantPreguntas;
 var temas = [];
+var preguntaActual = [];
+var IndexPreguntaActual = 0;
 let miSistema = new Sistema();
 
 var form = document.querySelectorAll("form");
@@ -30,6 +32,9 @@ function inicio() {
     .getElementById("gestionLink")
     .addEventListener("click", mostrarGestion);
   document.getElementById("jugarLink").addEventListener("click", mostrarJugar);
+  document
+    .getElementById("jugarBtn")
+    .addEventListener("click", mostrarPregunta);
 }
 
 function Promedio() {
@@ -114,7 +119,11 @@ function cargarDatos() {
 }
 
 // funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
-function hideCarga() {}
+function hideCarga() {
+  let section = document.getElementById("cargaDatosSection");
+
+  section.style.display = "none";
+}
 
 function addList(id, title, desc) {
   let liTemas = document.getElementById(id);
@@ -123,6 +132,20 @@ function addList(id, title, desc) {
 
   LIObj.appendChild(textNodeLI);
   liTemas.appendChild(LIObj);
+}
+
+function agregarFilas(datos) {
+  let tablaMuestra = document.getElementById("tabla-muestra");
+  const tr = document.createElement("tr");
+
+  datos.forEach((dato) => {
+    const td = document.createElement("td");
+    const txtNode = document.createTextNode(dato);
+    td.appendChild(txtNode);
+    tr.appendChild(td);
+  });
+
+  tablaMuestra.append(tr);
 }
 
 function addOption(id, label) {
@@ -193,16 +216,64 @@ function nuevaPregunta() {
   }
 }
 
-function agregarFilas(datos) {
-  let tablaMuestra = document.getElementById("tabla-muestra");
-  const tr = document.createElement("tr");
+function mostrarPregunta() {
+  let form = document.getElementById("gameForm");
+  if (form.reportValidity()) {
+    let seccion = document.getElementById("juegoSection");
+    seccion.style.display = "block";
 
-  datos.forEach((dato) => {
-    const td = document.createElement("td");
-    const txtNode = document.createTextNode(dato);
-    td.appendChild(txtNode);
-    tr.appendChild(td);
-  });
+    let preguntaEncontrada = preguntaActual[IndexPreguntaActual];
 
-  tablaMuestra.append(tr);
+    let listaRespuestas = [
+      ...preguntaEncontrada.respuestasIncorrectas,
+      preguntaEncontrada.respuestaCorrecta,
+    ];
+
+    listaRespuestas = listaRespuestas.sort(() => Math.random() - 0.5); // Mezclar las respuestas
+    document.getElementById("terminarJuego").addEventListener("click", () => {
+      seccion.style.display = "none";
+      alert("juego terminado");
+    });
+
+    let gameTema = document.getElementById("gameTema").value;
+    let nivelJuego = document.getElementById("nivelJuego").value;
+
+    let pregText = document.getElementById("textoPregunta");
+    pregText.innerHTML = "";
+
+    let preguntasSistema = miSistema.listaPreguntas;
+
+    for (let pregunta of preguntasSistema) {
+      if (pregunta.tema === gameTema && pregunta.nivel === nivelJuego) {
+        preguntaEncontrada = pregunta;
+        pregText.innerHTML = pregunta.texto;
+      }
+    }
+    let respuestasContainer = document.getElementById("respuestasContainer");
+
+    listaRespuestas.forEach((respuesta) => {
+      let resButton = document.createElement("button");
+      resButton.className = "respuestas";
+      resButton.innerHTML = respuesta;
+      resButton.addEventListener("click", () =>
+        verificarRepuesta(respuesta, preguntaEncontrada.respuestaCorrecta)
+      );
+      respuestasContainer.appendChild(resButton);
+    });
+  }
+}
+
+function verificarRepuesta(resSel, resCorr) {
+  if (resSel === resCorr) {
+    // reproducir sonido
+    alert("correcto");
+    if (IndexPreguntaActual < preguntaActual.length) {
+      mostrarPregunta();
+    } else {
+      alert("juego terminado");
+      document.getElementById("JuegoSection").style.display = "none";
+    }
+  } else {
+    alert("Respuesta Incorrecta, intente de nuevo");
+  }
 }

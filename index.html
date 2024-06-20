@@ -11,9 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{{Diviertete jugando trivia}}" />
     <meta name="keywords" content="{{game, trivia, fun}}" />
-    <link rel="stylesheet" href="./css/app.css" />
-    <link rel="stylesheet" href="./css/admin.css" />
-    <link rel="stylesheet" href="./css/game.css" />
+    <link rel="stylesheet" href="./css/estilos.css" />
+
     <title>Trivia</title>
   </head>
   <body>
@@ -184,19 +183,22 @@
           Orden nombre tema decreciente/nivel creciente
         </label>
       </div>
-      <table class="tabla-muestra" id="tabla-muestra">
-        <thead>
-          <tr>
-            <th>Texto de la pregunta</th>
-            <th>Nivel</th>
-            <th>Nombre del tema</th>
 
-            <th>Respuesta correcta</th>
-            <th>Respuestas incorrectas</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="scrollBody">
+        <table class="tabla-muestra" id="tabla-muestra">
+          <thead>
+            <tr>
+              <th>Texto de la pregunta</th>
+              <th>Nivel</th>
+              <th>Nombre del tema</th>
+
+              <th>Respuesta correcta</th>
+              <th>Respuestas incorrectas</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </section>
     <!-- <section style="height: 1200px"></section> -->
 
@@ -207,31 +209,32 @@
         <h2 class="gameTitle">¡A JUGAR!</h2>
         <h4><strong>Configuración</strong></h4>
       </div>
-      <form class="gameForm">
+      <form class="gameForm" id="gameForm">
         <label for="temaJuego">Tema a elegir</label>
-        <select name="gameTema" id="temaJuego"></select>
+        <select name="gameTema" id="temaJuego" required></select>
         <label for="nivelJuego">Nivel del juego</label>
-        <input type="text" id="nivelJuego" />
-        <button id="jugar">Jugar</button>
+        <input type="text" id="nivelJuego" required />
+        <button type="submit" id="jugarBtn">Jugar</button>
       </form>
-      <div>
-        <h4><strong>Juego</strong></h4>
-        <p>Puntaje acumulado en esta partida: 0</p>
-        <p>La pregunta es...:</p>
-        <p class="respuestas">TEXTO DE LA PREGUNTA</p>
-      </div>
-      <form action="submit">
-        <div class="divRespuestas">
-          <button class="respuestas">Respuesta 1</button>
-          <button class="respuestas">Respuesta 2</button>
-          <button class="respuestas">Respuesta 3</button>
+      <article id="juegoSection">
+        <div>
+          <h4><strong>Juego</strong></h4>
+          <p>
+            Puntaje acumulado en esta partida:
+            <span id="puntajeAcumulado">0</span>
+          </p>
+          <p>La pregunta es...:</p>
+          <p class="respuestas" id="textoPregunta"></p>
         </div>
-        <div class="divRespuestas">
-          <button>Ayuda</button>
-          <button>Siguiente partida</button>
-          <button>Terminar</button>
-        </div>
-      </form>
+        <form>
+          <div class="divRespuestas" id="respuestasContainer"></div>
+          <div class="divRespuestas">
+            <button id="ayuda">Ayuda</button>
+            <button id="siguientePregunta">Siguiente partida</button>
+            <button id="terminarJuego">Terminar</button>
+          </div>
+        </form>
+      </article>
     </section>
     <script src="./js/datosPrueba.js"></script>
     <script src="./js/clases.js"></script>

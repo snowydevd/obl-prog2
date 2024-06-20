@@ -143,3 +143,143 @@ header nav {
   background-color: rgb(188, 188, 188);
   text-align: center;
 }
+
+/* SECCION GESTION */
+
+.admin {
+  background-color: rgb(239, 188, 118);
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.admin div {
+  /* box-shadow: 1px 1px 1px; */
+  /* width: 100%; */
+  margin-top: 5px;
+  font-size: 20px;
+  text-align: left;
+  border: 2px;
+  border-width: 5px;
+}
+.admin div h4 {
+  font-weight: 400;
+}
+
+.gestionTitle {
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  box-shadow: 0px 4px 5px black;
+}
+
+.adminForm {
+  width: 80%;
+  columns: 3;
+  /* display: inline-block; */
+
+  justify-items: left;
+  align-items: left;
+}
+.temaForm {
+  columns: 3;
+  /* display: inline-block; */
+
+  justify-items: left;
+  align-items: left;
+}
+
+.adminForm div {
+  width: fit-content;
+  /* background: white; */
+
+  /* width: fit-content; */
+}
+
+.adminForm button {
+  margin-top: 10px;
+  border-radius: 0;
+  padding: 2px;
+}
+.adminForm div select {
+  width: 100px;
+}
+.tabla-muestra {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-muestra th,
+.tabla-muestra td {
+  border: 1px solid #000;
+  padding: 8px 0px;
+  text-align: center;
+}
+
+.tabla-muestra thead {
+  background-color: rgb(217, 217, 217);
+}
+
+.tabla-muestra tbody {
+  margin-top: 100px;
+  background-color: #fff9c4;
+}
+
+/* SECCION JUEGO */
+
+.game {
+  background-color: rgb(250, 179, 203);
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.game div {
+  margin-top: 5px;
+  font-size: 20px;
+  text-align: left;
+  border: 2px;
+  border-width: 5px;
+}
+.gameTitle {
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  box-shadow: 0px 4px 5px black;
+}
+.game div h4 {
+  font-weight: 400;
+  margin: 15px;
+  text-align: center;
+}
+.game p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  padding: 10px;
+}
+.divRespuestas {
+  width: fit-content;
+  margin: auto;
+}
+.respuestas {
+  color: white;
+  text-align: center;
+  background-color: darkorange;
+  border: 0px;
+  padding: 5px;
+}
+
+.game form button {
+  display: block;
+}
+
+tr {
+  font-size: 15px;
+}
+
+#juegoSection {
+  display: none;
+}
+
+.scrollBody {
+  overflow: scroll;
+  height: 300px;
+}
