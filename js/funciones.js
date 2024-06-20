@@ -114,7 +114,11 @@ function cargarDatos() {
 }
 
 // funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
-function hideCarga() {}
+function hideCarga() {
+  let section = document.getElementById("cargaDatosSection");
+
+  section.style.display = "none";
+}
 
 function addList(id, title, desc) {
   let liTemas = document.getElementById(id);
@@ -131,6 +135,20 @@ function addOption(id, label) {
   var option = document.createElement("option");
   option.appendChild(OptionTxt);
   select.appendChild(option);
+}
+
+function agregarFilas(datos) {
+  let tablaMuestra = document.getElementById("tabla-muestra");
+  const tr = document.createElement("tr");
+
+  datos.forEach((dato) => {
+    const td = document.createElement("td");
+    const txtNode = document.createTextNode(dato);
+    td.appendChild(txtNode);
+    tr.appendChild(td);
+  });
+
+  tablaMuestra.append(tr);
 }
 
 function Contador(id, counter) {
@@ -191,18 +209,4 @@ function nuevaPregunta() {
   } else {
     alert("Porfavor, rellene todos los campos");
   }
-}
-
-function agregarFilas(datos) {
-  let tablaMuestra = document.getElementById("tabla-muestra");
-  const tr = document.createElement("tr");
-
-  datos.forEach((dato) => {
-    const td = document.createElement("td");
-    const txtNode = document.createTextNode(dato);
-    td.appendChild(txtNode);
-    tr.appendChild(td);
-  });
-
-  tablaMuestra.append(tr);
 }
