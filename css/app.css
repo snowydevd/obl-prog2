@@ -126,7 +126,17 @@ header nav {
 .fotos div .nombre {
   float: inline-end;
 }
+/* 
+.liTemas {
+  margin: 20px;
+  padding: 10px 5px;
+} */
 
+.liTemas li {
+  margin: 10px 10px 10px 20px;
+  list-style: square;
+  padding: 3px 0 0 0;
+}
 .cargarDatos {
   padding: 20px 30px;
   width: 100%;

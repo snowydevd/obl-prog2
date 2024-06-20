@@ -1,5 +1,3 @@
-// alert("ha");
-
 window.addEventListener("load", inicio);
 // Variables adicionales
 var cantTemas = 0;
@@ -21,21 +19,28 @@ function inicio() {
   document
     .getElementById("guardarPregunta")
     .addEventListener("click", nuevaPregunta);
-
   document
     .getElementById("cargarDatosBtn")
     .addEventListener("click", cargarDatos);
   document
     .getElementById("cancelCargaDatos")
     .addEventListener("click", hideCarga);
-
   document.getElementById("infoLink").addEventListener("click", mostrarInfo);
   document
     .getElementById("gestionLink")
     .addEventListener("click", mostrarGestion);
   document.getElementById("jugarLink").addEventListener("click", mostrarJugar);
+}
 
-  // alert('desea cargar los datos?')
+function Promedio() {
+  let promedio = document.getElementById("promedio");
+  console.log(cantPreguntas);
+  console.log(cantTemas);
+  if (isNaN(promedio.value)) {
+    promedio.innerHTML = "Sin datos";
+  } else {
+    promedio.innerHTML = parseInt(prom);
+  }
 }
 
 function mostrarInfo() {
@@ -64,15 +69,22 @@ function cargarDatos() {
   for (let dato of preguntas) {
     if (!miSistema.existePregunta(dato.texto, dato.tema.nombre)) {
       if (!miSistema.existeTema(dato.tema.nombre)) {
+        cantTemas++;
         var tema = new Tema(dato.tema.nombre, dato.tema.descripcion);
         miSistema.agregarTema(tema);
+
+        addOption("temas", tema.nombre);
+        addOption("temaJuego", tema.nombre);
+        addList("liTemas", tema.nombre, tema.descripcion);
+        Contador("totalTemasSpan", cantTemas);
+        Promedio();
         console.log(`tema ${tema.nombre} agregado`);
       } else {
         console.log("tema ya existe");
       }
 
-      cantTemas++;
       cantPreguntas++;
+      Contador("totalPreguntas", cantPreguntas);
 
       let preg = new Pregunta(
         dato.texto,
@@ -83,6 +95,7 @@ function cargarDatos() {
       );
 
       miSistema.agregarPregunta(preg);
+
       let celdas = [
         dato.texto,
         dato.nivel,
@@ -90,9 +103,6 @@ function cargarDatos() {
         dato.respuestaCorrecta,
         dato.respuestasIncorrectas,
       ];
-      addOption("temas", tema.nombre);
-      addOption("temaJuego", tema.nombre);
-
       agregarFilas(celdas);
     } else {
       alert("Ya existe la pregunta");
@@ -102,8 +112,18 @@ function cargarDatos() {
 
   section.style.display = "none";
 }
+
 // funcion para esconder la seccion de carga de datos en caso de que se elija no cargarlos
 function hideCarga() {}
+
+function addList(id, title, desc) {
+  let liTemas = document.getElementById(id);
+  let LIObj = document.createElement("LI");
+  let textNodeLI = document.createTextNode(`${title}: ${desc}`);
+
+  LIObj.appendChild(textNodeLI);
+  liTemas.appendChild(LIObj);
+}
 
 function addOption(id, label) {
   var select = document.getElementById(id);
@@ -113,8 +133,14 @@ function addOption(id, label) {
   select.appendChild(option);
 }
 
+function Contador(id, counter) {
+  let counterID = document.getElementById(id);
+  counterID.innerHTML = "";
+  let textNodeTotal = document.createTextNode(counter);
+  counterID.appendChild(textNodeTotal);
+}
+
 function nuevoTema() {
-  // e.preventDefault();
   let temaForm = document.getElementById("temaForm");
 
   if (temaForm.reportValidity()) {
@@ -125,31 +151,12 @@ function nuevoTema() {
       var tema = new Tema(temaName, temaDescription);
       miSistema.agregarTema(tema);
 
-      // * AGREGAR EL TEMA AL ARRAY DE TEMAS Y AGREGAR +1 A 'cantTemas'
-
       cantTemas += 1;
-      // * AGREGAR EL TEMA A LA LISTA `listaTemas`
-      let liTemas = document.getElementById("liTemas");
-      // liTemas.innerHTML = "";
-      let LIObj = document.createElement("LI");
-      let textNodeLI = document.createTextNode(
-        `${tema.nombre}: ${tema.descripcion}`
-      );
-
-      LIObj.appendChild(textNodeLI);
-      liTemas.appendChild(LIObj);
-
-      // * AGREGAR CANTIDAD DE TEMAS (numero)
-      let totalTemas = document.getElementById("totalTemasSpan");
-      totalTemas.innerHTML = "";
-      let textNodeTotal = document.createTextNode(cantTemas);
-      totalTemas.appendChild(textNodeTotal);
-
-      // * AGREGAR TEMA AL SELECT DE ALTA DE PREGUNTAS
 
       addOption("temas", temaName);
-      addOption("");
-
+      addList("liTemas", tema.nombre, tema.descripcion);
+      Contador("totalTemasSpan", cantTemas);
+      Promedio();
       alert(`El tema ${temaName} ha sido agregado`);
     } else {
       alert("este tema ya existe");
@@ -174,8 +181,8 @@ function nuevaPregunta() {
     miSistema.agregarPregunta(preg);
 
     cantPreguntas++;
-    let contadorPreguntas = document.getElementById("totalPreguntas");
-    contadorPreguntas.innerHTML = cantPreguntas;
+    Contador("totalPreguntas", cantPreguntas);
+    Promedio();
 
     let celdas = [texto, nivel, temaOpt, correcta, incorrecta];
     agregarFilas(celdas);
