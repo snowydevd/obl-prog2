@@ -39,8 +39,8 @@ function inicio() {
 
 function Promedio() {
   let promedio = document.getElementById("promedio");
-  console.log(cantPreguntas);
-  console.log(cantTemas);
+  // console.log(cantPreguntas);
+  // console.log(cantTemas);
   if (isNaN(promedio.value)) {
     promedio.innerHTML = "Sin datos";
   } else {
@@ -70,7 +70,6 @@ function mostrarJugar() {
 }
 
 function cargarDatos() {
-  console.log("funcion cargaDatos");
   for (let dato of preguntas) {
     if (!miSistema.existePregunta(dato.texto, dato.tema.nombre)) {
       if (!miSistema.existeTema(dato.tema.nombre)) {
@@ -83,7 +82,6 @@ function cargarDatos() {
         addList("liTemas", tema.nombre, tema.descripcion);
         Contador("totalTemasSpan", cantTemas);
         Promedio();
-        console.log(`tema ${tema.nombre} agregado`);
       } else {
         console.log("tema ya existe");
       }
@@ -152,6 +150,7 @@ function addOption(id, label) {
   var select = document.getElementById(id);
   var OptionTxt = document.createTextNode(label);
   var option = document.createElement("option");
+  option.value = label;
   option.appendChild(OptionTxt);
   select.appendChild(option);
 }
@@ -219,61 +218,80 @@ function nuevaPregunta() {
 function mostrarPregunta() {
   let form = document.getElementById("gameForm");
   if (form.reportValidity()) {
-    let seccion = document.getElementById("juegoSection");
-    seccion.style.display = "block";
+    document.getElementById("juegoSection").style.display = "block";
 
-    let preguntaEncontrada = preguntaActual[IndexPreguntaActual];
+    let listaPreguntas = miSistema.listaPreguntas;
+    let listaPreguntasValidas = [];
 
-    let listaRespuestas = [
-      ...preguntaEncontrada.respuestasIncorrectas,
-      preguntaEncontrada.respuestaCorrecta,
-    ];
+    let temaJuego = document.getElementById("temaJuego").value;
+    console.log("Tema del juego:", temaJuego);
 
-    listaRespuestas = listaRespuestas.sort(() => Math.random() - 0.5); // Mezclar las respuestas
-    document.getElementById("terminarJuego").addEventListener("click", () => {
-      seccion.style.display = "none";
-      alert("juego terminado");
+    // Obtener y convertir el valor del nivel del juego
+    let nivelJuego = parseInt(document.getElementById("nivelJuego").value);
+    console.log("Nivel del juego:", nivelJuego);
+
+    let valido = listaPreguntas.filter((pregunta) => {
+      let nivel = pregunta.nivel;
+      let tema = pregunta.tema.nombre.trim().toLowerCase();
+
+      console.log(pregunta.tema.nombre);
+
+      let nivelCoincide = nivel == nivelJuego;
+      let temaCoincide = tema == temaJuego.trim().toLowerCase();
+
+      return nivelCoincide && temaCoincide;
     });
 
-    let gameTema = document.getElementById("gameTema").value;
-    let nivelJuego = document.getElementById("nivelJuego").value;
+    listaPreguntasValidas.push(valido);
 
-    let pregText = document.getElementById("textoPregunta");
-    pregText.innerHTML = "";
+    listaPreguntasValidas[0].forEach((preg) => {
+      let pregText = document.getElementById(`textoJuego`);
+      pregText.innerText = preg.texto;
 
-    let preguntasSistema = miSistema.listaPreguntas;
+      let respuestasTotal = [];
 
-    for (let pregunta of preguntasSistema) {
-      if (pregunta.tema === gameTema && pregunta.nivel === nivelJuego) {
-        preguntaEncontrada = pregunta;
-        pregText.innerHTML = pregunta.texto;
-      }
-    }
-    let respuestasContainer = document.getElementById("respuestasContainer");
+      respuestasTotal.push(preg.respuestaCorrecta);
+      respuestasTotal.push(preg.respuestasIncorrectas);
 
-    listaRespuestas.forEach((respuesta) => {
-      let resButton = document.createElement("button");
-      resButton.className = "respuestas";
-      resButton.innerHTML = respuesta;
-      resButton.addEventListener("click", () =>
-        verificarRepuesta(respuesta, preguntaEncontrada.respuestaCorrecta)
-      );
-      respuestasContainer.appendChild(resButton);
+      respuestasTotal.sort();
+
+      console.log(`respuestas Totales:  ${respuestasTotal} `);
+
+      respuestasTotal.forEach((res) => {
+        let resContainer = document.getElementById("respuestasContainer");
+        let resButton = document.createElement("button");
+        resButton.className = "respuestas";
+        resButton.id = res;
+        resButton.innerText = res;
+        resButton.addEventListener("click", () => {
+          verificarRepuesta(res, preg.respuestaCorrecta);
+        });
+        resContainer.appendChild(resButton);
+      });
     });
+
+    console.log(listaPreguntasValidas);
+    console.log("Preguntas válidas:", valido);
+  } else {
+    console.error("miSistema.listaPreguntas no es un array válido");
   }
 }
 
 function verificarRepuesta(resSel, resCorr) {
+  var retorno = false;
   if (resSel === resCorr) {
     // reproducir sonido
+    retorno = true;
     alert("correcto");
     if (IndexPreguntaActual < preguntaActual.length) {
       mostrarPregunta();
     } else {
       alert("juego terminado");
-      document.getElementById("JuegoSection").style.display = "none";
+      document.getElementById("juegoSection").style.display = "none";
     }
   } else {
     alert("Respuesta Incorrecta, intente de nuevo");
   }
+
+  return retorno;
 }
