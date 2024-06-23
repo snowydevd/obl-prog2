@@ -18,14 +18,22 @@ class Sistema {
 
     return valido;
   }
-  existePregunta(texto, tema) {
+  existePregunta(texto) {
     // document.getElementById("cargaDatosSection").style.display = "block";
-    let valido = this.listaPreguntas.some(
-      (pregunta) => pregunta.texto === texto && pregunta.tema === tema
-    );
+    let valido = this.listaPreguntas.some((pregunta) => pregunta.texto === texto);
     // console.log(valido);
 
     return valido;
+  }
+  ordenarTemas(){
+    this.listaTemas.sort(function(a,b){
+      return a.nombre.localeCompare(b.nombre);
+    })
+  }
+  ordenarNivel(){
+    this.listaPreguntas.sort(function(a,b){
+      return a.nivel-b.nivel;
+    })
   }
 }
 class Tema {

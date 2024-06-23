@@ -147,7 +147,7 @@
         </div>
 
         <div>
-          <label for="incorrecta">Respuesta Inorrecta: </label>
+          <label for="incorrecta">Respuesta Incorrecta: </label>
           <input type="text" id="incorrecta" required />
         </div>
         <button type="submit" id="guardarPregunta">Guardar Pregunta</button>
@@ -167,7 +167,7 @@
           <input
             type="radio"
             name="elegirOrden"
-            id="elegirOrden"
+            id="elegirC"
             title="Orden nombre tema decreciente/nivel creciente"
             checked
           />
@@ -178,24 +178,23 @@
           <input
             type="radio"
             name="elegirOrden"
-            id="elegirOrden"
+            id="elegirD"
             title="Orden nombre tema creciente/nivel creciente"
           />
           Orden nombre tema decreciente/nivel creciente
         </label>
       </div>
-      <table class="tabla-muestra" id="tabla-muestra">
+      <table class="tabla-muestra">
         <thead>
           <tr>
-            <th>Texto de la pregunta</th>
+            <th>Nombre del Tema</th>
             <th>Nivel</th>
-            <th>Nombre del tema</th>
-
+            <th>Texto de la pregunta</th>
             <th>Respuesta correcta</th>
             <th>Respuestas incorrectas</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="tabla-muestra"></tbody>
       </table>
     </section>
     <!-- <section style="height: 1200px"></section> -->
