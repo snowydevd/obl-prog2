@@ -2,7 +2,18 @@ window.addEventListener("load", inicio);
 // Variables adicionales
 var cantTemas = 0;
 var cantPreguntas = 0;
+var temas = [];
+var preguntaActual = [];
+var IndexPreguntaActual = 0;
+
+let correcto = new Audio("../audio/correcto.mp3");
+let incorrecto = new Audio("../audio/incorrecto.mp3");
+
+let puntosJugador = 0;
+let puntajeMasAlto = 0;
+
 let miSistema = new Sistema();
+
 const r = 206;
 var g = 0;
 const b = 50;
@@ -31,8 +42,22 @@ function inicio() {
     .getElementById("gestionLink")
     .addEventListener("click", mostrarGestion);
   document.getElementById("jugarLink").addEventListener("click", mostrarJugar);
-  document.getElementById("elegirC").addEventListener("click", ordenarCreciente);
-  document.getElementById("elegirD").addEventListener("click", ordenarDecreciente);
+  document.getElementById("jugarBtn").addEventListener("click", iniciarJuego);
+
+  document
+    .getElementById("elegirC")
+    .addEventListener("click", ordenarCreciente);
+  document
+    .getElementById("elegirD")
+    .addEventListener("click", ordenarDecreciente);
+
+  document.getElementById("ayuda").addEventListener("click", darAyuda);
+  document
+    .getElementById("siguientePartida")
+    .addEventListener("click", siguientePartida);
+  document
+    .getElementById("terminarJuego")
+    .addEventListener("click", terminarJuego);
 }
 
 function Promedio() {
@@ -80,9 +105,7 @@ function cargarDatos() {
         addList("liTemas", tema.nombre, tema.descripcion);
         Contador("totalTemasSpan", cantTemas);
         Promedio();
-        console.log(`tema ${tema.nombre} agregado`);
       } else {
-        console.log("tema ya existe");
       }
 
       cantPreguntas++;
@@ -101,14 +124,14 @@ function cargarDatos() {
     }
   }
   miSistema.ordenarNivel();
-  if(document.getElementById("elegirC").checked){
+  if (document.getElementById("elegirC").checked) {
     ordenarCreciente();
-  }else if(document.getElementById("elegirD").checked){
+  } else if (document.getElementById("elegirD").checked) {
     ordenarDecreciente();
   }
-  console.log(miSistema.listaTemas);
+
   pregTabla();
-  
+
   let section = document.getElementById("cargaDatosSection");
   hideCarga(section);
 }
@@ -136,19 +159,6 @@ function addOption(id, label) {
   select.appendChild(option);
 }
 
-//function agregarFilas(datos) {
-//  let tablaMuestra = document.getElementById("tabla-muestra");
-//  const tr = document.createElement("tr");
-//
-//  datos.forEach((dato) => {
-//    const td = document.createElement("td");
-//    const txtNode = document.createTextNode(dato);
-//    td.appendChild(txtNode);
-//    tr.appendChild(td);
-//  });
-//  tablaMuestra.append(tr);
-//}
-
 function Contador(id, counter) {
   let counterID = document.getElementById(id);
   counterID.innerHTML = "";
@@ -158,6 +168,7 @@ function Contador(id, counter) {
 // Función para añadir un tema según los valores ingresados en el formulario "Alta de Temas"
 function nuevoTema() {
   let temaForm = document.getElementById("temaForm");
+  let temaSpan = document.getElementById("temaAgregado");
 
   if (temaForm.reportValidity()) {
     let temaName = document.getElementById("nombreTema").value;
@@ -173,9 +184,10 @@ function nuevoTema() {
       addList("liTemas", tema.nombre, tema.descripcion);
       Contador("totalTemasSpan", cantTemas);
       Promedio();
-      alert(`El tema ${temaName} ha sido agregado`);
+      // alert(`El tema ${temaName} ha sido agregado`);
+      temaSpan.innerHTML = `el tema ${temaName} ha sido agregado`;
     } else {
-      alert("Este tema ya existe");
+      temaSpan.innerHTML = `Este tema ya existe`;
     }
   } else {
     alert("Por favor, rellene todos los campos");
@@ -184,6 +196,7 @@ function nuevoTema() {
 // Función para añadir pregunta según los valores ingresados en el formulario "Alta de preguntas"
 function nuevaPregunta() {
   let form = document.getElementById("pregForm");
+  let pregSpan = document.getElementById("pregAgregada");
   if (form.reportValidity()) {
     let texto = document.getElementById("textoPregunta").value;
     let nivel = document.getElementById("nivel").value;
@@ -191,13 +204,13 @@ function nuevaPregunta() {
     let correcta = document.getElementById("correcta").value;
     let incorrecta = document.getElementById("incorrecta").value.split(",");
     let temaObj = [];
-    for(let tema of miSistema.listaTemas){
-      if(tema.nombre==temaOpt){
-        temaObj=tema;
+    for (let tema of miSistema.listaTemas) {
+      if (tema.nombre == temaOpt) {
+        temaObj = tema;
       }
     }
-    if(!miSistema.existePregunta(texto)){  
-      if(incluyeStr(correcta,incorrecta)){
+    if (!miSistema.existePregunta(texto)) {
+      if (incluyeStr(correcta, incorrecta)) {
         let preg = new Pregunta(texto, nivel, temaObj, correcta, incorrecta);
         miSistema.agregarPregunta(preg);
 
@@ -206,56 +219,57 @@ function nuevaPregunta() {
         Promedio();
 
         miSistema.ordenarNivel();
-        if(document.getElementById("elegirC").checked){
+        if (document.getElementById("elegirC").checked) {
           ordenarCreciente();
-        }else if(document.getElementById("elegirD").checked){
+        } else if (document.getElementById("elegirD").checked) {
           ordenarDecreciente();
         }
         pregTabla();
 
-        alert("Pregunta agregada");
-      }else{
-        alert("Respuesta correcta y respuesta incorrecta coincide");
+        pregSpan.innerText = "Pregunta agregada";
+      } else {
+        pregSpan.innerText =
+          "Respuesta Correcta y respuesta incorrecta coinciden";
       }
     } else {
-      alert("Ya existe una pregunta con ese nombre");
+      pregSpan.innerText = "Ya existe una pregunta con ese nombre";
     }
-  }  else {
-      alert("Por favor, rellene todos los campos");
-  } 
+  } else {
+    alert("Por favor, rellene todos los campos");
+  }
 }
 // Función que transforma valores numéricos al formato usado para colores (dos dígitos, cociente y resto de 16)
 function toHex(number) {
   let hexStr = "";
-  let first = parseInt(number/16);
-  let second = parseInt(number%16);
-  hexStr= hexChar(first) + hexChar(second);
+  let first = parseInt(number / 16);
+  let second = parseInt(number % 16);
+  hexStr = hexChar(first) + hexChar(second);
   return hexStr;
 }
 // Función que convierte un valor numérico base 10 a su equivalente hexadecimal
-function hexChar(number){
+function hexChar(number) {
   let hex = "0123456789ABCDEF";
   let retorno = hex[number];
   return retorno;
 }
 // Función que genera un color aleatorio variando el green de RGB
-function generateColor(){
-  let colorTema=[];
-  for(let tema of miSistema.listaTemas){
-    g=Math.floor(Math.random()*56)+150;
-    colorTema.push("#"+toHex(r)+toHex(g)+toHex(b));
+function generateColor() {
+  let colorTema = [];
+  for (let tema of miSistema.listaTemas) {
+    g = Math.floor(Math.random() * 56) + 150;
+    colorTema.push("#" + toHex(r) + toHex(g) + toHex(b));
   }
   return colorTema;
 }
 // Función que imprime las preguntas en la tabla de gestión
 // Recorre cada pregunta y crea una celda para cada elemento, las listas están ordenadas previamente
-function pregTabla(){
+function pregTabla() {
   let tablaMuestra = document.getElementById("tabla-muestra");
-  tablaMuestra.innerHTML="";
+  tablaMuestra.innerHTML = "";
   let listaColores = generateColor();
-  for(let tema of miSistema.listaTemas){
-    for(let preg of miSistema.listaPreguntas){
-      if(tema.nombre==preg.tema.nombre){
+  for (let tema of miSistema.listaTemas) {
+    for (let preg of miSistema.listaPreguntas) {
+      if (tema.nombre == preg.tema.nombre) {
         var n = getIndex(preg.tema.nombre);
         var tr = document.createElement("tr");
         const tdTexto = document.createElement("td");
@@ -285,40 +299,256 @@ function pregTabla(){
   }
 }
 // Función que recibe el nombre de un tema y retorna la posición del mismo en listaTemas
-function getIndex(nombreTema){
-  let index=0;
-  for(let tema of miSistema.listaTemas){
-    if(tema.nombre==nombreTema){
-      index=miSistema.listaTemas.indexOf(tema);
+function getIndex(nombreTema) {
+  let index = 0;
+  for (let tema of miSistema.listaTemas) {
+    if (tema.nombre == nombreTema) {
+      index = miSistema.listaTemas.indexOf(tema);
     }
   }
   return index;
 }
 // Función que ordena los temas de forma decreciente (criterio alfabético)
-function ordenarDecreciente(){
-  let aux=[];
+function ordenarDecreciente() {
+  let aux = [];
   miSistema.ordenarTemas();
-  for(let i=miSistema.listaTemas.length-1;i>=0;i--){
+  for (let i = miSistema.listaTemas.length - 1; i >= 0; i--) {
     aux.push(miSistema.listaTemas[i]);
   }
-  miSistema.listaTemas=[];
-  for(let tema of aux){
+  miSistema.listaTemas = [];
+  for (let tema of aux) {
     miSistema.listaTemas.push(tema);
   }
   pregTabla();
 }
 // Función que ordena los temas de forma creciente (criterio alfabético)
 // Hace uso del método ordenarTemas, pero sirve para la interacción con radio buttons al ser una función
-function ordenarCreciente(){
+function ordenarCreciente() {
   miSistema.ordenarTemas();
   pregTabla();
 }
 // Función que revisa si un array incluye un string determinado
 // Se usa para ver si "RespuestaCorrecta" se encuentra incluida en "RespuestasIncorrectas"
-function incluyeStr(strA,array){
+function incluyeStr(strA, array) {
   let valido = true;
-  if(array.includes(strA)){
+  if (array.includes(strA)) {
     valido = false;
   }
   return valido;
+}
+
+// function mostrarPregunta() {
+//   let form = document.getElementById("gameForm");
+//   if (form.reportValidity()) {
+//     document.getElementById("gameForm").style.display = "none";
+//     document.getElementById("seccionJuego").style.display = "block";
+
+//     let listaPreguntas = miSistema.listaPreguntas;
+//     let listaPreguntasValidas = [];
+
+//     let temaJuego = document.getElementById("temaJuego").value;
+//     console.log("Tema del juego:", temaJuego);
+
+//     let nivelJuego = parseInt(document.getElementById("nivelJuego").value);
+//     console.log("Nivel del juego:", nivelJuego);
+
+//     let valido = listaPreguntas.filter((pregunta) => {
+//       let nivel = pregunta.nivel;
+//       let tema = pregunta.tema.nombre.trim().toLowerCase();
+
+//       let nivelCoincide = nivel == nivelJuego;
+//       let temaCoincide = tema == temaJuego.trim().toLowerCase();
+
+//       return nivelCoincide && temaCoincide;
+//     });
+
+//     listaPreguntasValidas.push(valido);
+
+//     for (let pregunta of listaPreguntasValidas[0]) {
+//       console.log(pregunta.texto);
+//       let preguntaTexto = document.getElementById("pregText");
+//       preguntaTexto.innerText = pregunta.texto;
+
+//       preguntaActual = [
+//         pregunta.respuestaCorrecta,
+//         ...pregunta.respuestasIncorrectas,
+//       ];
+
+//       preguntaActual.sort();
+
+//       let resContainer = document.getElementById("respuestasContainer");
+
+//       resContainer.replaceChildren();
+
+//       preguntaActual.forEach((res) => {
+//         let resButton = document.createElement("button");
+//         resButton.className = "respuestas";
+//         resButton.id = res;
+//         resButton.innerText = res;
+//         resButton.addEventListener("click", () => {
+//           verificarRepuesta(res, pregunta.respuestaCorrecta);
+//         });
+//         resContainer.appendChild(resButton);
+//       });
+//     }
+//   } else {
+//     console.error("miSistema.listaPreguntas no es un array válido");
+//   }
+// }
+
+function otorgarPuntos(cond) {
+  if (cond) {
+    puntosJugador += 10;
+  } else {
+    puntosJugador -= 1;
+  }
+
+  if (puntajeMasAlto < puntosJugador) {
+    puntajeMasAlto = puntosJugador;
+  }
+  console.log(puntosJugador);
+
+  let maxPuntosSpan = document.getElementById("maxPuntos");
+  maxPuntosSpan.innerHTML = puntajeMasAlto;
+  let puntosSpan = document.getElementById("puntajeJugador");
+  puntosSpan.innerHTML = puntosJugador;
+}
+
+function mostrarPregunta() {
+  if (IndexPreguntaActual >= listaPreguntasValidas.length) {
+    terminarJuego();
+    return;
+  }
+
+  let pregunta = listaPreguntasValidas[IndexPreguntaActual];
+  console.log(pregunta.texto);
+  let preguntaTexto = document.getElementById("pregText");
+  preguntaTexto.innerText = pregunta.texto;
+
+  preguntaActual = [
+    pregunta.respuestaCorrecta,
+    ...pregunta.respuestasIncorrectas,
+  ];
+
+  preguntaActual.sort();
+
+  let resContainer = document.getElementById("respuestasContainer");
+  resContainer.replaceChildren();
+
+  preguntaActual.forEach((res) => {
+    let resButton = document.createElement("button");
+    resButton.className = "respuestas";
+    resButton.id = res;
+    resButton.innerText = res;
+    resButton.addEventListener("click", () => {
+      verificarRepuesta(res, pregunta.respuestaCorrecta);
+    });
+    resContainer.appendChild(resButton);
+  });
+
+  // if (IndexPreguntaActual < listaPreguntasValidas.length) {
+  //   let pregunta = listaPreguntasValidas[IndexPreguntaActual];
+  //   console.log(pregunta.texto);
+  //   let preguntaTexto = document.getElementById("pregText");
+  //   preguntaTexto.innerText = pregunta.texto;
+
+  //   preguntaActual = [
+  //     pregunta.respuestaCorrecta,
+  //     ...pregunta.respuestasIncorrectas,
+  //   ];
+
+  //   preguntaActual.sort();
+
+  //   let resContainer = document.getElementById("respuestasContainer");
+  //   resContainer.replaceChildren();
+
+  //   preguntaActual.forEach((res) => {
+  //     let resButton = document.createElement("button");
+  //     resButton.className = "respuestas";
+  //     resButton.id = res;
+  //     resButton.innerText = res;
+  //     resButton.addEventListener("click", () => {
+  //       verificarRepuesta(res, pregunta.respuestaCorrecta);
+  //     });
+  //     resContainer.appendChild(resButton);
+  //   });
+  // } else {
+  //   terminarJuego();
+  // }
+}
+
+function iniciarJuego() {
+  let form = document.getElementById("gameForm");
+  if (form.reportValidity()) {
+    document.getElementById("gameForm").style.display = "none";
+    document.getElementById("seccionJuego").style.display = "block";
+
+    let temaJuego = document.getElementById("temaJuego").value;
+    console.log("Tema del juego:", temaJuego);
+
+    let nivelJuego = parseInt(document.getElementById("nivelJuego").value);
+    console.log("Nivel del juego:", nivelJuego);
+
+    listaPreguntasValidas = miSistema.listaPreguntas.filter((pregunta) => {
+      let nivel = pregunta.nivel;
+      let tema = pregunta.tema.nombre.trim().toLowerCase();
+
+      let nivelCoincide = nivel == nivelJuego;
+      let temaCoincide = tema == temaJuego.trim().toLowerCase();
+
+      return nivelCoincide && temaCoincide;
+    });
+
+    // IndexPreguntaActual = 0;
+    mostrarPregunta();
+  } else {
+    console.error("Formulario no es válido");
+  }
+}
+function darAyuda(respuestaCorrecta) {
+  console.log(respuestaCorrecta[0]);
+}
+
+function siguientePartida() {
+  IndexPreguntaActual++;
+  mostrarPregunta();
+}
+
+function terminarJuego() {
+  alert("Juego terminado");
+  preguntaActual = [];
+  document.getElementById("gameForm").style.display = "block";
+  document.getElementById("seccionJuego").style.display = "none";
+}
+
+function verificarRepuesta(resSel, resCorr) {
+  let validar = document.getElementById("validar");
+
+  // let puntajeJugador = 0;
+  if (resSel === resCorr) {
+    correcto.play();
+
+    validar.style.display = "block";
+    validar.style.backgroundColor = "green";
+    validar.style.color = "white";
+    validar.innerText = "Correcto!";
+    otorgarPuntos(true);
+    IndexPreguntaActual++;
+    mostrarPregunta();
+  } else {
+    incorrecto.play();
+    otorgarPuntos(false);
+    validar.style.display = "block";
+    validar.style.backgroundColor = "red";
+    validar.style.color = "white";
+    validar.innerText = "Incorrecto, intente de nuevo";
+    // alert("Respuesta Incorrecta, intente de nuevo");
+  }
+}
+
+function terminarJuego() {
+  alert(`Juego terminado, tu puntaje ha sido: ${puntosJugador}`);
+
+  document.getElementById("seccionJuego").style.display = "none";
+  document.getElementById("gameForm").style.display = "block";
 }

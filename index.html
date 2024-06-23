@@ -38,7 +38,7 @@
       <h3>Desea cargar los datos de prueba?</h3>
       <div>
         <button id="cargarDatosBtn">Si</button>
-        <button id="cancelCargaDatos">no</button>
+        <button id="cancelCargaDatos">No</button>
       </div>
     </section>
 
@@ -94,6 +94,7 @@
 
         <h4><strong>Alta de temas</strong></h4>
       </div>
+      <span id="temaAgregado"> </span>
       <form class="temaForm" id="temaForm">
         <label for="nombre">Nombre:</label>
         <input id="nombreTema" type="text" required />
@@ -126,6 +127,7 @@
         <h2 class="gestionTitle">GESTION DE PREGUNTAS</h2>
         <h4><strong>Alta de preguntas</strong></h4>
       </div>
+      <span id="pregAgregada"></span>
       <form class="adminForm" id="pregForm">
         <div>
           <label for="temas">Tema:</label>
@@ -159,7 +161,10 @@
         <span id="totalPreguntas">0 preguntas</span>
       </p>
 
-      <p>Maximo puntaje obtenido por un jugador: sin datos</p>
+      <p>
+        Maximo puntaje obtenido por un jugador:
+        <span id="maxPuntos">Sin datos</span>
+      </p>
 
       <div>
         <p>Preguntas registradas:</p>
@@ -206,31 +211,38 @@
         <h2 class="gameTitle">¡A JUGAR!</h2>
         <h4><strong>Configuración</strong></h4>
       </div>
-      <form class="gameForm">
+      <form class="gameForm" id="gameForm">
         <label for="temaJuego">Tema a elegir</label>
         <select name="gameTema" id="temaJuego" required></select>
         <label for="nivelJuego">Nivel del juego</label>
         <input type="number" id="nivelJuego" required />
-        <button id="jugar">Jugar</button>
+        <button id="jugarBtn">Jugar</button>
       </form>
-      <div>
-        <h4><strong>Juego</strong></h4>
-        <p>Puntaje acumulado en esta partida: 0</p>
-        <p>La pregunta es...:</p>
-        <p class="respuestas">TEXTO DE LA PREGUNTA</p>
-      </div>
-      <form action="submit">
-        <div class="divRespuestas">
-          <button class="respuestas">Respuesta 1</button>
-          <button class="respuestas">Respuesta 2</button>
-          <button class="respuestas">Respuesta 3</button>
+
+      <article class="seccionJuego" id="seccionJuego">
+        <div>
+          <h4><strong>Juego</strong></h4>
+          <p>
+            Puntaje acumulado en esta partida:
+            <span id="puntajeJugador">0</span>
+          </p>
+          <p>La pregunta es...:</p>
+          <p class="textoPregunta" id="pregText">
+            No existe ninguna pregunta con ese tema o nivel
+            <span id="ayudaSpan" class="ayuda"> </span>
+          </p>
         </div>
-        <div class="divRespuestas">
-          <button>Ayuda</button>
-          <button>Siguiente partida</button>
-          <button>Terminar</button>
-        </div>
-      </form>
+        <form action="submit">
+          <span id="validar" class="validar"></span>
+          <div class="divRespuestas" id="respuestasContainer"></div>
+
+          <div class="divRespuestas">
+            <button id="ayuda">Ayuda</button>
+            <button id="siguientePartida">Siguiente partida</button>
+            <button id="terminarJuego">Terminar</button>
+          </div>
+        </form>
+      </article>
     </section>
     <script src="./js/datosPrueba.js"></script>
     <script src="./js/clases.js"></script>

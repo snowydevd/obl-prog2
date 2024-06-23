@@ -12,28 +12,32 @@ class Sistema {
     this.listaPreguntas.push(pregunta);
   }
 
-  // REVISAR ESTO EN AYUDANTIAS
   existeTema(nombreTema) {
+    // HECHO CON CHATGPT-4
+    // prompt: Hazme una funcion que evalue si el atributo nombre del objeto tema, es igual al nombreTema el cual ingresa el usuario, esta evaluacion sera hecha dentro de un array, por lo tanto la funcion debera retornar true o false para ser usado posteriormente en otras partes del codigo
+
+    // el metodo .some() comprueba si al menos un elemento de un array cumple con una condicion, en el caso de que sea asi, devuelve true
+
     let valido = this.listaTemas.some((tema) => tema.nombre === nombreTema);
 
     return valido;
   }
   existePregunta(texto) {
-    // document.getElementById("cargaDatosSection").style.display = "block";
-    let valido = this.listaPreguntas.some((pregunta) => pregunta.texto === texto);
-    // console.log(valido);
+    let valido = this.listaPreguntas.some(
+      (pregunta) => pregunta.texto === texto
+    );
 
     return valido;
   }
-  ordenarTemas(){
-    this.listaTemas.sort(function(a,b){
+  ordenarTemas() {
+    this.listaTemas.sort(function (a, b) {
       return a.nombre.localeCompare(b.nombre);
-    })
+    });
   }
-  ordenarNivel(){
-    this.listaPreguntas.sort(function(a,b){
-      return a.nivel-b.nivel;
-    })
+  ordenarNivel() {
+    this.listaPreguntas.sort(function (a, b) {
+      return a.nivel - b.nivel;
+    });
   }
 }
 class Tema {
