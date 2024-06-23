@@ -257,6 +257,10 @@ header nav {
 }
 .divRespuestas {
   width: fit-content;
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
   margin: auto;
 }
 .respuestas {
@@ -265,6 +269,11 @@ header nav {
   background-color: darkorange;
   border: 0px;
   padding: 5px;
+  transition: 0.2s ease-in-out;
+}
+
+.respuestas:hover {
+  background-color: rgb(124, 64, 3);
 }
 
 .game form button {

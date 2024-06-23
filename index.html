@@ -213,7 +213,7 @@
         <label for="temaJuego">Tema a elegir</label>
         <select name="gameTema" id="temaJuego" required></select>
         <label for="nivelJuego">Nivel del juego</label>
-        <input type="text" id="nivelJuego" required />
+        <input type="number" min="1" max="5" id="nivelJuego" required />
         <button type="submit" id="jugarBtn">Jugar</button>
       </form>
       <article id="juegoSection">
@@ -224,7 +224,9 @@
             <span id="puntajeAcumulado">0</span>
           </p>
           <!-- <p>La pregunta es...:</p> -->
-          <p class="respuestas" id="textoJuego">Texto</p>
+          <p class="respuestas" id="textoJuego">
+            El tema elegido no tiene preguntas asociadas con el mismo nivel
+          </p>
         </div>
         <form>
           <div class="divRespuestas" id="respuestasContainer"></div>
