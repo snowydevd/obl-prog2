@@ -11,9 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{{Diviertete jugando trivia}}" />
     <meta name="keywords" content="{{game, trivia, fun}}" />
-    <link rel="stylesheet" href="./css/app.css" />
-    <link rel="stylesheet" href="./css/admin.css" />
-    <link rel="stylesheet" href="./css/game.css" />
+    <link rel="stylesheet" href="./css/estilos.css" />
     <title>Trivia</title>
   </head>
   <body>
@@ -96,10 +94,10 @@
       </div>
       <span id="temaAgregado"> </span>
       <form class="temaForm" id="temaForm">
-        <label for="nombre">Nombre:</label>
+        <label for="nombreTema">Nombre:</label>
         <input id="nombreTema" type="text" required />
 
-        <label for="descripcion">Descripcion:</label>
+        <label for="descriptionTema">Descripcion:</label>
         <input type="text" id="descriptionTema" required />
         <button type="submit" id="guardarTema">Guardar Tema</button>
       </form>
@@ -131,9 +129,7 @@
       <form class="adminForm" id="pregForm">
         <div>
           <label for="temas">Tema:</label>
-          <select name="tema" id="temas" required>
-            <!-- <option value="">Geografia</option> -->
-          </select>
+          <select name="tema" id="temas" required></select>
         </div>
         <div>
           <label for="nivel">Nivel</label>
@@ -168,7 +164,7 @@
 
       <div>
         <p>Preguntas registradas:</p>
-        <label for="creciente">
+        <label for="elegirC">
           <input
             type="radio"
             name="elegirOrden"
@@ -179,7 +175,7 @@
           Orden nombre tema creciente/nivel creciente
         </label>
 
-        <label for="decreciente">
+        <label for="elegirD">
           <input
             type="radio"
             name="elegirOrden"
@@ -189,18 +185,22 @@
           Orden nombre tema decreciente/nivel creciente
         </label>
       </div>
-      <table class="tabla-muestra">
-        <thead>
-          <tr>
-            <th>Nombre del Tema</th>
-            <th>Nivel</th>
-            <th>Texto de la pregunta</th>
-            <th>Respuesta correcta</th>
-            <th>Respuestas incorrectas</th>
-          </tr>
-        </thead>
-        <tbody id="tabla-muestra"></tbody>
-      </table>
+      <div class="divTabla">
+        <table class="tabla-muestra">
+          <thead>
+            <tr>
+              <th>Nombre del Tema</th>
+              <th>Nivel</th>
+              <th>Texto de la pregunta</th>
+              <th>Respuesta correcta</th>
+              <th>Respuestas incorrectas</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-muestra">
+            <!-- <div></div> -->
+          </tbody>
+        </table>
+      </div>
     </section>
     <!-- <section style="height: 1200px"></section> -->
 
@@ -211,11 +211,12 @@
         <h2 class="gameTitle">¡A JUGAR!</h2>
         <h4><strong>Configuración</strong></h4>
       </div>
+
       <form class="gameForm" id="gameForm">
         <label for="temaJuego">Tema a elegir</label>
         <select name="gameTema" id="temaJuego" required></select>
         <label for="nivelJuego">Nivel del juego</label>
-        <input type="number" id="nivelJuego" required />
+        <input type="number" id="nivelJuego" min="1" max="5" required />
         <button id="jugarBtn">Jugar</button>
       </form>
 
@@ -227,10 +228,8 @@
             <span id="puntajeJugador">0</span>
           </p>
           <p>La pregunta es...:</p>
-          <p class="textoPregunta" id="pregText">
-            No existe ninguna pregunta con ese tema o nivel
-            <span id="ayudaSpan" class="ayuda"> </span>
-          </p>
+          <p class="textoPregunta" id="pregText"></p>
+          <span id="ayudaSpan" class="ayuda"> </span>
         </div>
         <form action="submit">
           <span id="validar" class="validar"></span>
@@ -238,7 +237,7 @@
 
           <div class="divRespuestas">
             <button id="ayuda">Ayuda</button>
-            <button id="siguientePartida">Siguiente partida</button>
+            <button id="siguientePartida">Siguiente pregunta</button>
             <button id="terminarJuego">Terminar</button>
           </div>
         </form>

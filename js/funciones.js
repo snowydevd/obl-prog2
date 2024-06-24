@@ -3,8 +3,13 @@ window.addEventListener("load", inicio);
 var cantTemas = 0;
 var cantPreguntas = 0;
 var temas = [];
+var listaPreguntasValidas = [];
 var preguntaActual = [];
 var IndexPreguntaActual = 0;
+var datosCargados = false;
+var respondida = false;
+
+let validar = document.getElementById("validar");
 
 let correcto = new Audio("../audio/correcto.mp3");
 let incorrecto = new Audio("../audio/incorrecto.mp3");
@@ -75,13 +80,23 @@ function mostrarInfo() {
   document.getElementById("admin").style.display = "none";
   document.getElementById("jugar").style.display = "none";
   document.getElementById("cargaDatosSection").style.display = "none";
+  document.getElementById("gameForm").style.display = "block";
+  listaPreguntasValidas = [];
+  document.getElementById("seccionJuego").style.display = "none";
 }
 
 function mostrarGestion() {
   document.getElementById("info").style.display = "none";
   document.getElementById("admin").style.display = "block";
   document.getElementById("jugar").style.display = "none";
-  document.getElementById("cargaDatosSection").style.display = "block";
+  document.getElementById("gameForm").style.display = "block";
+  listaPreguntasValidas = [];
+  document.getElementById("seccionJuego").style.display = "none";
+  if (!datosCargados) {
+    document.getElementById("cargaDatosSection").style.display = "block";
+  } else {
+    hideCarga();
+  }
 }
 
 function mostrarJugar() {
@@ -92,7 +107,7 @@ function mostrarJugar() {
 }
 
 function cargarDatos() {
-  console.log("funcion cargaDatos");
+  datosCargados = true;
   for (let dato of preguntas) {
     if (!miSistema.existePregunta(dato.texto)) {
       if (!miSistema.existeTema(dato.tema.nombre)) {
@@ -337,65 +352,6 @@ function incluyeStr(strA, array) {
   return valido;
 }
 
-// function mostrarPregunta() {
-//   let form = document.getElementById("gameForm");
-//   if (form.reportValidity()) {
-//     document.getElementById("gameForm").style.display = "none";
-//     document.getElementById("seccionJuego").style.display = "block";
-
-//     let listaPreguntas = miSistema.listaPreguntas;
-//     let listaPreguntasValidas = [];
-
-//     let temaJuego = document.getElementById("temaJuego").value;
-//     console.log("Tema del juego:", temaJuego);
-
-//     let nivelJuego = parseInt(document.getElementById("nivelJuego").value);
-//     console.log("Nivel del juego:", nivelJuego);
-
-//     let valido = listaPreguntas.filter((pregunta) => {
-//       let nivel = pregunta.nivel;
-//       let tema = pregunta.tema.nombre.trim().toLowerCase();
-
-//       let nivelCoincide = nivel == nivelJuego;
-//       let temaCoincide = tema == temaJuego.trim().toLowerCase();
-
-//       return nivelCoincide && temaCoincide;
-//     });
-
-//     listaPreguntasValidas.push(valido);
-
-//     for (let pregunta of listaPreguntasValidas[0]) {
-//       console.log(pregunta.texto);
-//       let preguntaTexto = document.getElementById("pregText");
-//       preguntaTexto.innerText = pregunta.texto;
-
-//       preguntaActual = [
-//         pregunta.respuestaCorrecta,
-//         ...pregunta.respuestasIncorrectas,
-//       ];
-
-//       preguntaActual.sort();
-
-//       let resContainer = document.getElementById("respuestasContainer");
-
-//       resContainer.replaceChildren();
-
-//       preguntaActual.forEach((res) => {
-//         let resButton = document.createElement("button");
-//         resButton.className = "respuestas";
-//         resButton.id = res;
-//         resButton.innerText = res;
-//         resButton.addEventListener("click", () => {
-//           verificarRepuesta(res, pregunta.respuestaCorrecta);
-//         });
-//         resContainer.appendChild(resButton);
-//       });
-//     }
-//   } else {
-//     console.error("miSistema.listaPreguntas no es un array válido");
-//   }
-// }
-
 function otorgarPuntos(cond) {
   if (cond) {
     puntosJugador += 10;
@@ -406,7 +362,6 @@ function otorgarPuntos(cond) {
   if (puntajeMasAlto < puntosJugador) {
     puntajeMasAlto = puntosJugador;
   }
-  console.log(puntosJugador);
 
   let maxPuntosSpan = document.getElementById("maxPuntos");
   maxPuntosSpan.innerHTML = puntajeMasAlto;
@@ -421,7 +376,7 @@ function mostrarPregunta() {
   }
 
   let pregunta = listaPreguntasValidas[IndexPreguntaActual];
-  console.log(pregunta.texto);
+
   let preguntaTexto = document.getElementById("pregText");
   preguntaTexto.innerText = pregunta.texto;
 
@@ -445,36 +400,6 @@ function mostrarPregunta() {
     });
     resContainer.appendChild(resButton);
   });
-
-  // if (IndexPreguntaActual < listaPreguntasValidas.length) {
-  //   let pregunta = listaPreguntasValidas[IndexPreguntaActual];
-  //   console.log(pregunta.texto);
-  //   let preguntaTexto = document.getElementById("pregText");
-  //   preguntaTexto.innerText = pregunta.texto;
-
-  //   preguntaActual = [
-  //     pregunta.respuestaCorrecta,
-  //     ...pregunta.respuestasIncorrectas,
-  //   ];
-
-  //   preguntaActual.sort();
-
-  //   let resContainer = document.getElementById("respuestasContainer");
-  //   resContainer.replaceChildren();
-
-  //   preguntaActual.forEach((res) => {
-  //     let resButton = document.createElement("button");
-  //     resButton.className = "respuestas";
-  //     resButton.id = res;
-  //     resButton.innerText = res;
-  //     resButton.addEventListener("click", () => {
-  //       verificarRepuesta(res, pregunta.respuestaCorrecta);
-  //     });
-  //     resContainer.appendChild(resButton);
-  //   });
-  // } else {
-  //   terminarJuego();
-  // }
 }
 
 function iniciarJuego() {
@@ -484,10 +409,8 @@ function iniciarJuego() {
     document.getElementById("seccionJuego").style.display = "block";
 
     let temaJuego = document.getElementById("temaJuego").value;
-    console.log("Tema del juego:", temaJuego);
 
     let nivelJuego = parseInt(document.getElementById("nivelJuego").value);
-    console.log("Nivel del juego:", nivelJuego);
 
     listaPreguntasValidas = miSistema.listaPreguntas.filter((pregunta) => {
       let nivel = pregunta.nivel;
@@ -499,55 +422,77 @@ function iniciarJuego() {
       return nivelCoincide && temaCoincide;
     });
 
+    listaPreguntasValidas = aleatorizar(listaPreguntasValidas);
+
+    // HECHO CON CHATGPT-4
+    //prompt: genera un condicional que evalue que el array "listaPreguntasValidas" este vacio, y en caso de estarlo, tirar un alert
+    if (listaPreguntasValidas.length === 0) {
+      // noHayValidadas.style.display = "block";
+      alert(`No existe ninguna pregunta con ese tema o nivel`);
+    }
+
     // IndexPreguntaActual = 0;
     mostrarPregunta();
   } else {
     console.error("Formulario no es válido");
   }
 }
-function darAyuda(respuestaCorrecta) {
-  console.log(respuestaCorrecta[0]);
+function darAyuda() {
+  let respuesta = listaPreguntasValidas[IndexPreguntaActual].respuestaCorrecta;
+  alert(`la respuesta empieza con: "${respuesta[0]}"`);
+}
+
+// HECHO CON CHATGPT-4
+// prompt: realiza una funcion en javascript que reordene un array de forma aleatoria
+function aleatorizar(array) {
+  // Iteramos desde el final del array hasta el principio
+  for (let i = array.length - 1; i > 0; i--) {
+    // Generamos un índice aleatorio desde 0 hasta i
+    const j = Math.floor(Math.random() * (i + 1));
+    // Intercambiamos los elementos array[i] y array[j]
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 function siguientePartida() {
   IndexPreguntaActual++;
+  validar.style.display = "none";
+  respondida = false;
+
   mostrarPregunta();
 }
 
-function terminarJuego() {
-  alert("Juego terminado");
-  preguntaActual = [];
-  document.getElementById("gameForm").style.display = "block";
-  document.getElementById("seccionJuego").style.display = "none";
-}
-
 function verificarRepuesta(resSel, resCorr) {
-  let validar = document.getElementById("validar");
-
   // let puntajeJugador = 0;
-  if (resSel === resCorr) {
-    correcto.play();
+  if (!respondida) {
+    if (resSel === resCorr) {
+      correcto.play();
+      respondida = true;
 
-    validar.style.display = "block";
-    validar.style.backgroundColor = "green";
-    validar.style.color = "white";
-    validar.innerText = "Correcto!";
-    otorgarPuntos(true);
-    IndexPreguntaActual++;
-    mostrarPregunta();
-  } else {
-    incorrecto.play();
-    otorgarPuntos(false);
-    validar.style.display = "block";
-    validar.style.backgroundColor = "red";
-    validar.style.color = "white";
-    validar.innerText = "Incorrecto, intente de nuevo";
-    // alert("Respuesta Incorrecta, intente de nuevo");
+      validar.style.display = "block";
+      validar.style.backgroundColor = "green";
+      validar.style.color = "white";
+      validar.innerText = "Correcto!";
+      otorgarPuntos(true);
+    } else {
+      incorrecto.play();
+      otorgarPuntos(false);
+      validar.style.display = "block";
+      validar.style.backgroundColor = "red";
+      validar.style.color = "white";
+      validar.innerText = "Incorrecto, intente de nuevo";
+      // alert("Respuesta Incorrecta, intente de nuevo");
+    }
   }
 }
 
 function terminarJuego() {
   alert(`Juego terminado, tu puntaje ha sido: ${puntosJugador}`);
+
+  puntosJugador = 0;
+  let puntosSpan = document.getElementById("puntajeJugador");
+  puntosSpan.innerHTML = puntosJugador;
 
   document.getElementById("seccionJuego").style.display = "none";
   document.getElementById("gameForm").style.display = "block";

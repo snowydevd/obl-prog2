@@ -58,9 +58,6 @@ class Pregunta {
     this.nivel = nivel;
     this.tema = tema;
   }
-  // separarIncorrectas(incorrectas) {
-  //   this.respuestasIncorrectas = incorrectas.split;
-  // }
 
   esCorrecta() {
     return alert(`${this.respuestaCorrecta} es correcto!`);
@@ -69,5 +66,3 @@ class Pregunta {
     return alert(`La respuesta es incorrecta!`);
   }
 }
-
-// export { Pregunta, Tema };
